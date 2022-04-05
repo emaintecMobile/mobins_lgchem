@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.emaintec.mobins">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- This attribute is "false" by default on apps targeting   Android 10 or higher.
+    파일 루트에 저장할 수 없을 경우   android:requestLegacyExternalStorage="true"
+    -->
+    <!-- zxing 화면이 안나와서   android:hardwareAccelerated="true"  -->
+<!--    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />-->
+    <!--PM85-->
+    <permission
+        android:name="${applicationId}.device.sdk.sample.scanner.permission.SCANNER_RESULT_RECEIVER"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="${applicationId}.device.sdk.sample.scanner.permission.SCANNER_RESULT_RECEIVER" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <application
+        android:hardwareAccelerated="false"
+        android:requestLegacyExternalStorage="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <activity
+            android:name="com.emaintec.mobins.Activity_Splash"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- network change noti n버전 이상에서는 작동이 안됨-->
+      <!--  <receiver
+            android:name="com.emaintec.common.net.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>-->
+        <activity android:name="com.emaintec.lib.permission.PermissionActivity" />
+        <activity
+            android:name="com.emaintec.Activity_ViewPager"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.emaintec.mobins.Activity_Login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.emaintec.mobins.Activity_Main"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.emaintec.mobins.Activity_Setup"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:hardwareAccelerated="true"
+            android:name="com.emaintec.external.zxing.ActivityZxingScanner"
+            android:label="바코드스캔"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <service android:name="com.emaintec.mobins.UndeadService" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#333333</color>
+    <color name="colorPrimaryDark">#333333</color>
+    <color name="colorAccent">#E6C00000</color>
+
+    <color name="colorMain">#FF9934</color>
+    <color name="colorLGMain">#E6C00000</color>
+<!--      <color name="colorMain">#0072BC</color>-->
+    <color name="colorBackgroud">#EFEDEE</color>
+    <color name="colorTitleBackgroud">#333333</color>
+    <color name="colorLoginBackgroud">#333333</color>
+    <color name="colorSearchBackgroud">#333333</color>
+    <color name="colorListHeaderBg">#CCCCCC</color>
+
+<!--button-->
+    <color name="btnSaveBackgroud">#E6C00000</color>
+    <color name="btnDisableBackgroud">#A5A5A5</color>
+    <color name="btnTextSave">#FF9934</color>
+    <color name="btnTextFlash">#f7f8fa</color>
+    <color name="btnTextAppr">#f7f8fa</color>
+    <color name="btnApprBackgroud">#333333</color>
+    <color name="btnApprTxt">#f7f8fa</color>
+    <color name="btnNextPreTxt">#f7f8fa</color>
+    <!--RecycleView-->
+    <color name="colorMyMenuBack">#333333</color>
+    <color name="colorListWorkerDivider">#00FFFFFF</color>
+    <color name="colorListDivider">#C0C0C0</color>
+    <color name="colorListDividerSel">#FF9934</color>
+    <color name="colorListHeaderTxt">#5C5C5C</color>
+    <color name="colorListHeaderSel">#000000</color>
+    <color name="colorListDetailTxt">#787C7C</color>
+    <!--text color-->
+    <color name="textMenuHeader">#000000</color>
+    <color name="textMyMenuMore">#FFFFFF</color>
+    <color name="textSearch">#FFFFFF</color>
+    <color name="textSearchHit">#787C7C</color>
+    <color name="textInfo">#5C5C5C</color>
+
+
+    <!--floating action button-->
+    <color name="fabPrimary">#FF9934</color>
+    <color name="fabPressed">#E3780F</color>
+    <color name="fabRipple">#FBB876</color>
+<!--tab color-->
+    <color name="colorTabBackgroud">#0A1E5A</color>
+<!--fragment-->
+    <color name="colorTableDark">#6e96be</color>
+    <color name="colorTableStroke">#2DB9DC</color>
+    <color name="colorTableSeparator">#0AAAD2</color>
+    <color name="colorTableTitle">#87C8D7</color>
+    <color name="colorTableText">#FFFFFF</color>
+    <color name="colorTableWhite">#FFFFFF</color>
+    <color name="colorHyperText">#2772d7</color>
+    <!--Icon title-->
+    <color name="colorTitleIcon">#FFFFFF</color>
+
+    <color name="colorConsumerTitle">#2b2b2b</color>
+    <color name="colorConsumerText">#4d4d4d</color>
+
+    <color name="from">#000000</color>
+    <color name="subject">#111111</color>
+    <color name="message">#7a7a7a</color>
+    <color name="icon_tint_normal">#7a7a7a</color>
+    <color name="icon_tint_selected">#fed776</color>
+    <color name="row_activated">#e0e0e0</color>
+    <color name="bg_action_mode">#757575</color>
+</resources>

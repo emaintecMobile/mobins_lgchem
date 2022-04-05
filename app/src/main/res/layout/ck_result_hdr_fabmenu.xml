@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.0"
+    android:background="@android:drawable/screen_background_dark_transparent">
+
+    <LinearLayout
+        android:id="@+id/layout_EqDtl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="설비상세"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_EqDtl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="false"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            app:srcCompat="@mipmap/icon_dtl"
+            tools:ignore="VectorDrawableCompat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_WOHIST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="정비이력"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_WOHIST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="false"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            app:srcCompat="@mipmap/icon_history" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_PTBOM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="자재BOM"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_PTBOM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:clickable="false"
+                app:srcCompat="@mipmap/icon_part"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="normal" tools:ignore="VectorDrawableCompat"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_TMREQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="TM발행"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_TMREQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="false"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            app:srcCompat="@mipmap/icon_woreq"
+            tools:ignore="VectorDrawableCompat" />
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="false"
+        app:backgroundTint="@color/fabPrimary"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_white" tools:ignore="VectorDrawableCompat"/>
+
+</FrameLayout>

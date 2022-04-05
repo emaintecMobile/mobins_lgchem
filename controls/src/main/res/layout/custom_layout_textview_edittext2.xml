@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingTop="4dp">
+
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:gravity="start|center_vertical"
+    android:singleLine="false"
+    android:text="타이틀"
+    android:textColor="#ffffff"
+    android:textSize="14sp"
+    tools:ignore="HardcodedText" />
+
+<com.emaintec.lib.ctrl.EditTextDialog
+    android:id="@+id/editTextDialog"
+    style="@style/CustomEditText_Large"
+    android:layout_width="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="16dp"
+    android:layout_gravity="center"
+    android:imeOptions="actionDone"
+    android:inputType="text"
+    android:maxLength="400"
+    android:maxLines="1"
+    android:text="EditTextDialog"
+    android:textColor="#F1EFEF"
+    android:textAlignment="textEnd"
+    tools:ignore="HardcodedText,RtlCompat"/>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_centerInParent="true"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:background="@color/colorBottomLine" />
+
+</LinearLayout>

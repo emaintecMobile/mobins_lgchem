@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+    <com.emaintec.controls.CustomLayout_TextView_Close
+        android:id = "@+id/customLayout_Title"
+        style="@style/CustomLayout_Default"
+        android:background="@color/colorLGMain"
+        android:layout_height="40dp"
+        app:leftTextView_Text="점검 결과입력"
+        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/layout_Frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewCkPos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="측정위치: JIB CRANE > 주간PM점검일지" />
+            <TextView
+                android:id="@+id/textViewCkType"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="분류: JIB CRANE > 주간PM점검일지" />
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="55dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutNum"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:id="@+id/textView_MinValue"
+                        tools:text="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text=" &lt; ( "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:id="@+id/textView_StdValue"
+                        tools:text="100"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text=" = "/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:id="@+id/editText_NumValue"
+                        android:inputType="numberSigned|numberDecimal"
+                        android:hint="수치입력"
+                        android:gravity="center"
+                        tools:text="50"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text=" ) &lt; "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:id="@+id/textView_MaxValue"
+                        tools:text="100"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id = "@+id/groupStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:id="@+id/buttonStatusO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="OK" />
+
+                        <com.google.android.material.button.MaterialButton
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:id="@+id/buttonStatusX"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="NOK" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+                <com.emaintec.lib.ctrl.EditTextDialog
+                    android:visibility="gone"
+                    android:id="@+id/textEditRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="2dp"
+                    android:maxLines="8"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:hint="비고를 입력하세요"
+                    />
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/selector_listview"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonHst"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_save"
+            android:padding="4dp"
+            android:text="트랜드"
+            android:textColor="@color/btnNextPreTxt"
+            android:textStyle="bold"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_Prev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_save"
+            android:padding="4dp"
+            android:text="이전"
+            android:textColor="@color/btnNextPreTxt"
+            android:textStyle="bold"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_Next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_save"
+            android:padding="4dp"
+            android:text="다음"
+            android:textColor="@color/btnNextPreTxt"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+</LinearLayout>

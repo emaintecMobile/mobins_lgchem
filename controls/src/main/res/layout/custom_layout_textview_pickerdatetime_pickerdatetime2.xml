@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:minHeight="40dp"
+        android:background="@drawable/modify_selector_list_item_03"
+        android:orientation="horizontal">
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:gravity="start|center_vertical"
+            android:text="타이틀"
+        android:textColor="@color/colorTitle"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"/>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <com.emaintec.lib.ctrl.PickerDate
+                    android:id="@+id/pickerDate_Start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="110dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+            <com.emaintec.lib.ctrl.PickerTime
+                    android:id="@+id/pickerTime_Start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="70dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <com.emaintec.lib.ctrl.PickerDate
+                    android:id="@+id/pickerDate_End"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="110dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+            <com.emaintec.lib.ctrl.PickerTime
+                    android:id="@+id/pickerTime_End"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="70dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.emaintec.lib.ctrl.EditTextDialog
+            android:id ="@+id/editTextDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal|numberSigned"
+            android:text="0"
+            tools:ignore="HardcodedText,RtlCompat"/>
+
+
+</LinearLayout>

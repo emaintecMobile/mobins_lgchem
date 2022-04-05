@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            proguardFile file('proguard-rules-crashlytics.pro')
+            proguardFile file('proguard-rules-gson.pro')
+//            proguardFile file('proguard-rules-okhttp3.pro')
+//            proguardFile file('proguard-rules-retrofit2.pro')
+//            proguardFile file('proguard-rules-rxjava.pro')
+            proguardFile file('proguard-rules-zxing.pro')
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //noinspection GradleDependency
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'net.zetetic:android-database-sqlcipher:4.4.2@aar'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'// db 암호화 관련
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.3.0-rc01'
+    def sqlite_version = "2.1.0"
+    // Kotlin
+    implementation "androidx.sqlite:sqlite-ktx:$sqlite_version"
+    // Implementation of the AndroidX SQLite interfaces via the Android framework APIs.
+    implementation "androidx.sqlite:sqlite-framework:$sqlite_version"
+}
+//repositories {
+//    mavenCentral()
+//}

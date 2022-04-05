@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.emaintec.datasync.dataSync">
+
+    <com.emaintec.controls.CustomLayout_TextView_Close
+        android:id="@+id/customLayout_Title"
+        android:visibility="gone"
+        style="@style/CustomLayout_Default"
+        android:layout_height="40dp"
+        android:background="@color/colorMain"
+        app:leftTextView_Tag="DOWNLOAD"
+        app:leftTextView_Text="자료주고받기"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bts_rectangle_white_gray_round"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textView_Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="기간" />
+
+                    <com.emaintec.lib.ctrl.DatePickerTextView
+                        android:id="@+id/dtp_CkScheduleDate_from"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:gravity="end|center_vertical"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="~" />
+
+                    <com.emaintec.lib.ctrl.DatePickerTextView
+                        android:id="@+id/dtp_CkScheduleDate_to"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:gravity="end|center_vertical"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/textView_Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="창고선택" />
+
+                    <Spinner
+                        android:id="@+id/spinner_WAREHOUSE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:tooltipText="창고" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bts_rectangle_white_gray_round"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <Switch
+                    android:id="@+id/switch_CkMst"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="점검설비
+                    마스터 정보"
+                    android:textOff="N"
+                    android:textOn="Y" />
+
+                <TextView
+                    android:id="@+id/textView_CkResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bts_rectangle_white_gray_round"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <Switch
+                    android:id="@+id/switchCkDaily"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="일일
+                    점검설비"
+                    android:textOff="N"
+                    android:textOn="Y" />
+
+                <TextView
+                    android:id="@+id/textViewCkDaily"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_Download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_button_save"
+                    android:text="다운로드"
+                    android:textColor="@color/btnApprTxt" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_Upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_button_save"
+                    android:text="업로드"
+                    android:textColor="@color/btnApprTxt" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+    <!--    </com.otaliastudios.zoom.ZoomLayout>-->
+</LinearLayout>

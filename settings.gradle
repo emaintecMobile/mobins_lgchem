@@ -1,0 +1,7 @@
+include ':zxing'
+include ':treeview'
+include ':tree'
+include ':controls'
+include ':lib'
+include ':app'
+rootProject.name='mobins_lgchem'

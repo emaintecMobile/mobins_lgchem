@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f8fa"
+    android:orientation="vertical">
+
+    <com.emaintec.controls.CustomLayout_TextView_Close
+        android:id="@+id/customLayout_Title"
+        style="@style/CustomLayout_Default"
+        android:layout_height="40dp"
+        android:background="@color/colorLGMain"
+        app:leftTextView_Text="일일 점검항목"
+        tools:ignore="MissingConstraints" />
+
+    <FrameLayout
+        android:id="@+id/layout_Top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSearchBackgroud"
+        app:layout_constraintTop_toBottomOf="@+id/customLayout_Title"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColorHint="@android:color/darker_gray"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@android:color/darker_gray"
+                    app:helperTextEnabled="true"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@android:color/darker_gray">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_Search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="TAG NO 입력하세요"
+                        android:singleLine="true"
+                        android:textColor="@color/textSearch"
+                        android:textColorHint="@color/textSearchHit" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/button_Inquery"
+                    style="@style/button_Inquery"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSpecial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+                <com.emaintec.controls.CustomLayout_TextView_EditText
+                    android:id="@+id/editTextSpecial"
+                    style="@style/CustomLayout_Default"
+                    app:CustomStyle="3"
+                    app:leftTextView_Text="특기사항"
+                    app:rightEditText_ImeOptions="actionDone"
+                    app:rightEditText_InputType="textMultiLine"
+                    app:rightEditText_MaxLength="1000"
+                    app:rightEditText_MaxLines="3"
+                    app:rightEditText_Text=""
+                    app:rightEditText_TextAlignment="textStart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/btnApprTxt"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="가동유무" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupStandBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioStandByYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btnApprTxt"
+                        android:checked="true"
+                        android:text="Y" />
+
+                    <RadioButton
+                        android:id="@+id/radioStandByNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btnApprTxt"
+                        android:text="N" />
+                </RadioGroup>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/btnApprTxt"
+                    android:gravity="center_vertical"
+                    android:text="이상유무" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupStranger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioStrangerYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btnApprTxt"
+                        android:text="Y" />
+
+                    <RadioButton
+                        android:id="@+id/radioStrangerNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btnApprTxt"
+                        android:checked="true"
+                        android:text="N" />
+                </RadioGroup>
+            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:textColor="@color/btnApprTxt"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="측정지점" />-->
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="트랜드"/>-->
+
+<!--            </LinearLayout>-->
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout_Scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_BottomButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_Top">
+
+        <include
+            android:id="@+id/grid"
+            layout="@layout/common_ctrl_grid" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id = "@+id/layout_BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="#a8a8a8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_Save"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="1dp"
+            android:background="@drawable/selector_button_save"
+            android:textColor="@color/btnApprTxt"
+            android:text="저 장" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,78 @@
+<resources>
+
+    <!-- Base application theme.  -->
+    <!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <!--        <item name="actionMenuTextColor">@android:color/white</item>-->
+        <!-- CHECK  edittext 밑줄-->
+        <item name="colorAccent">@color/colorLGMain</item>
+        <!-- 타이틀바  밑 기본 버튼 -->
+        <item name="colorPrimary">@color/colorLGMain</item>
+        <!-- 최상단 시계및 각종 정보 색깔 -->
+        <item name="colorPrimaryDark">@color/colorTitleBackgroud</item>
+    </style>
+    <!-- 시작 팝업메뉴 스타일 설정 -->
+    <style name="PopupMenuTheme" parent="Widget.AppCompat.PopupMenu">
+        <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+        <item name="android:listPreferredItemHeightSmall">75dp</item>
+    </style>
+
+    <style name="PopupMenu" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:popupBackground">@drawable/bg_popup_menu</item>
+        <!-- Change Overflow Menu ListView Item Height & Property -->
+
+    </style>
+    <style name="itemTextStyle.AppTheme" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/textSearch</item>
+        <item name="android:textSize">18sp</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+
+    </style>
+    <!--끝 팝업메뉴 스타일 설정 -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="BtnDefault" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:background">@drawable/splash_background</item>
+    </style>
+    <!-- 조회버튼 스타일 -->
+    <style name="button_Inquery">
+        <item name="android:gravity">center</item>
+        <item name="android:background">#00FFFFFF</item>
+        <item name="android:tint">@color/colorLGMain</item>
+        <item name="android:src">@drawable/ic_search_black</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <!-- 아이콘 스타일 -->
+    <style name="button_Icon">
+        <item name="android:gravity">center</item>
+        <item name="android:background">#00FFFFFF</item>
+        <item name="android:tint">@color/colorMain</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <!--  -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+    <style name="textView_Label">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+    <style name="FullDialogTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+</resources>

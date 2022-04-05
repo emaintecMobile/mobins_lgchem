@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.emaintec.controls.CustomLayout_TextView_Close
+            style="@style/CustomLayout_Default"
+            android:id="@+id/titleClose"
+            android:visibility="gone"
+            app:leftTextView_Text="부서선택" />
+    <RelativeLayout
+        android:layout_below="@id/status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/containerTree"></RelativeLayout>
+
+    <TextView
+            android:id = "@+id/textView_DeptNm"
+             android:layout_width="match_parent"
+              android:layout_height="80dp"
+              android:maxLines="40"
+              android:scrollbars="vertical"
+              android:imeOptions="actionDone"
+              android:inputType="textMultiLine"
+            android:text=""/>
+    <LinearLayout
+            android:id="@+id/status"
+            android:layout_below="@id/titleClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <Button
+                android:visibility="gone"
+                android:id="@+id/btn_toggleSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택"
+         />
+        <Button
+                android:id="@+id/btn_selectAll"
+                android:text="+ All"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <Button
+                android:id="@+id/btn_deselectAll"
+            android:visibility="gone"
+                android:text="clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <Button
+                android:visibility="gone"
+            android:id="@+id/btn_checkSelection"
+            android:text="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_Ok"
+            android:textColor="@color/btnTextSave"
+            android:background="@drawable/selector_button_save"
+            android:textStyle="bold"
+                android:text="확인"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

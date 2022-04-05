@@ -1,0 +1,65 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="CustomLayout_Default_Style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">40dp</item>
+    </style>
+
+
+    <style name="CustomLayout_Default">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="CustomLayout_Separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:background">#c0c0c0</item>
+    </style>
+
+    <style name="CustomButton_Normal">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="CustomButton_Large">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="CustomEditText_Normal" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_default</item>
+        <item name="android:textColor">@color/selector_edittext</item>
+    </style>
+
+    <style name="CustomEditText_Large" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_default</item>
+        <item name="android:textColor">@color/selector_edittext</item>
+    </style>
+
+    <style name="CustomSpinner_Normal" parent="Widget.AppCompat.Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">@dimen/font_default</item>
+    </style>
+
+    <style name="CustomSpinner_Large">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">@dimen/font_default</item>
+    </style>
+
+</resources>

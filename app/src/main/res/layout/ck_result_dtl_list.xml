@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_Frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_01"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    tools:text="점검항목"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bts_selector_list_item_02"
+                android:minHeight="55dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    tools:text="점검내용"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id = "@+id/group_Status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="양호" />
+                        <com.google.android.material.button.MaterialButton
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="불량" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+                <LinearLayout
+                    android:id = "@+id/frame_NumberInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/textView_Min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/holo_red_light"
+                        android:text="1012"/>
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:text=" &lt; ("/>
+                    <TextView
+                        android:id="@+id/textView_Std"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/holo_blue_bright"
+                        android:gravity="center_vertical"
+                        android:text="1110"/>
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="25sp"
+                        android:text="="/>
+                    <com.emaintec.lib.ctrl.EditText
+                        android:id="@+id/editText_Result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="수치입력"
+
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        android:textSize="20sp"
+                        />
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:text=") &lt; "/>
+                    <TextView
+                        android:id="@+id/textView_Max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/holo_red_light"
+                        android:text="3330"/>
+
+
+                    <TextView
+                        android:id="@+id/textView_Uom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:text="uom"/>
+
+                </LinearLayout>
+                <com.emaintec.lib.ctrl.EditTextDialog
+                    android:id="@+id/textEdit_Comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="2dp"
+                    android:maxLines="8"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:hint="비고를 입력하세요"
+                    />
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/selector_listview"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

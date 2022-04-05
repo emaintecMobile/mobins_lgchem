@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_default">14dp</dimen>
+
+
+    <dimen name="stamp_width">48dp</dimen>
+    <dimen name="stamp_height">24dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">300dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+</resources>

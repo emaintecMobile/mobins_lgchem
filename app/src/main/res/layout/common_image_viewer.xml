@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="0dp"
+    android:background="@color/colorBackgroud"
+    android:orientation="vertical">
+    <com.emaintec.controls.CustomLayout_TextView_Close
+        android:id = "@+id/customLayout_Title"
+        style="@style/CustomLayout_Default"
+        android:background="@color/colorMain"
+        android:layout_height="40dp"
+        app:leftTextView_Tag="imageView"
+        app:leftTextView_Text="첨부파일 뷰어"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f7f8fa"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <com.otaliastudios.zoom.ZoomLayout
+                android:id="@+id/zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:alignment="center"
+                app:hasClickableChildren="true"
+                app:horizontalPanEnabled="true"
+                app:maxZoom="5"
+                app:maxZoomType="zoom"
+                app:minZoom="1"
+                app:minZoomType="zoom"
+                app:overPinchable="false"
+                app:overScrollHorizontal="false"
+                app:overScrollVertical="false"
+                app:verticalPanEnabled="true"
+                app:zoomEnabled="true"
+                >
+                <view
+                    android:id="@+id/paintView"
+                    class="com.emaintec.lib.ctrl.PaintView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="top"
+                    android:visibility="gone" />
+            </com.otaliastudios.zoom.ZoomLayout>
+            <LinearLayout
+                android:id="@+id/layoutVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <FrameLayout
+                    android:id="@+id/videoViewWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/frame_Control"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id = "@+id/checkBox_Paint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="펜"/>
+            <SeekBar
+                android:id="@+id/slider_PenWeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="20"
+                android:min="1"
+                android:progress ="10"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                />
+            <ImageButton
+                android:id="@+id/button_Undo"
+                style="@style/button_Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_undo_24">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/button_Redo"
+                style="@style/button_Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_redo_24">
+            </ImageButton>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <RadioButton
+                    android:id="@+id/button_Red"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FF0000"
+                    />
+                <RadioButton
+                    android:id="@+id/button_Blue"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="#0000FF"
+                    android:text="" />
+                <RadioButton
+                    android:id="@+id/button_Black"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    android:checked="true"
+                    android:text="" />
+                <RadioButton
+                    android:id="@+id/button_White"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    />
+                <RadioButton
+                    android:id="@+id/button_Yellow"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFF00"
+                    />
+            </RadioGroup>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id = "@+id/layout_ButtonGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#a8a8a8"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_Clear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button_appr"
+                android:text="지우기" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_Delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button_appr"
+                android:text="삭제" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_Save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button_save"
+                android:textColor="@color/btnTextSave"
+                android:text="저장" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_Close"
+                android:visibility="gone"
+                android:background="@drawable/selector_button_appr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="닫기" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="leftTextView_ID" format="reference|integer"/>
+    <attr name="leftTextView_Tag" format="reference|string"/>
+    <attr name="leftTextView_Text" format="reference|string"/>
+    <attr name="leftTextView_textStyle" format="reference|string"/>
+    <attr name="leftTextView_TextSize" format="reference|string"/>
+    <attr name="CustomStyle" format="reference|string"/>
+    <attr name="rightButton_ID" format="reference|integer"/>
+    <attr name="bottomEditText_ID" format="reference|integer"/>
+    <attr name="rightButton_Text" format="reference|string"/>
+    <attr name="rightEditText_ID" format="reference|integer"/>
+    <attr name="rightEditText_Text" format="reference|string"/>
+    <attr name="bottomTextView_TextColor"/>
+    <attr name="bottomTextView_Text"/>
+    <attr name="rightEditText_ImeOptions" format="integer">
+        <flag name="actionNone" value="0x00000001"/>
+        <flag name="actionGo" value="0x00000002"/>
+        <flag name="actionSearch" value="0x00000003"/>
+        <flag name="actionSend" value="0x00000004"/>
+        <flag name="actionNext" value="0x00000005"/>
+        <flag name="actionDone" value="0x00000006"/>
+        <flag name="actionPrevious" value="0x00000007"/>
+    </attr>
+    <attr name="rightEditText_InputType" format="integer">
+        <flag name="text" value="0x00000001"/>
+        <flag name="number" value="0x00000002"/>
+        <flag name="phone" value="0x00000003"/>
+        <flag name="datetime" value="0x00000004"/>
+        <flag name="textMultiLine" value="0x00020001"/>
+    </attr>
+    <attr name="rightEditText_MaxLength" format="reference|integer"/>
+    <attr name="rightEditText_MaxLines" format="reference|integer"/>
+    <attr name="rightEditText_PrivateImeOptions" format="reference|string"/>
+    <attr name="rightHypherText_ID" format="reference|integer"/>
+    <attr name="rightHypherText_Text" format="reference|string"/>
+    <attr name="rightImageButton_ID" format="reference|integer"/>
+    <attr name="rightImageButton_Resource" format="reference|integer"/>
+    <attr name="rightSpinner_ID" format="reference|integer"/>
+    <attr name="rightSpinner_Mode" format="reference|string"/>
+    <attr name="rightTextView_ID" format="reference|integer"/>
+    <attr name="rightTextView_Text" format="reference|string"/>
+    <attr name="rightTextView_Text2" format="reference|string"/>
+    <attr name="rightTextView_TextColor" format="reference|integer"/>
+    <attr name="bottomCheckBox_ID" format="reference|integer"/>
+    <attr name="bottomCheckBox_Text" format="reference|string"/>
+    <attr name="bottomEditText_ImeOptions" format="integer">
+        <flag name="actionNone" value="0x00000001"/>
+        <flag name="actionGo" value="0x00000002"/>
+        <flag name="actionSearch" value="0x00000003"/>
+        <flag name="actionSend" value="0x00000004"/>
+        <flag name="actionNext" value="0x00000005"/>
+        <flag name="actionDone" value="0x00000006"/>
+        <flag name="actionPrevious" value="0x00000007"/>
+    </attr>
+    <attr name="bottomEditText_InputType" format="integer">
+        <flag name="text" value="0x00000001"/>
+        <flag name="number" value="0x00000002"/>
+        <flag name="phone" value="0x00000003"/>
+        <flag name="datetime" value="0x00000004"/>
+    </attr>
+    <attr name="bottomEditText_MaxLength" format="reference|integer"/>
+    <attr name="bottomEditText_MaxLines" format="reference|integer"/>
+    <attr name="bottomEditText_PrivateImeOptions" format="reference|string"/>
+
+    <declare-styleable name="CustomLayout_TextView">
+        <attr name="leftTextView_ID"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="CustomStyle"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_Close">
+        <attr name="leftTextView_ID"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="CustomStyle"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomLayout_TextView_EditText_ImageButton">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_ID"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+        <attr name="rightImageButton_ID"/>
+        <attr name="rightImageButton_Resource"/>
+        <attr name="rightEditText_TextAlignment"/>
+        <attr name="rightEditText_Height"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_EditText_ImageButton_CheckBox">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_ID"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+        <attr name="rightImageButton_ID"/>
+        <attr name="rightImageButton_Resource"/>
+        <attr name="bottomCheckBox_ID"/>
+        <attr name="bottomCheckBox_Text"/>
+        <attr name="rightEditText_TextAlignment"/>
+        <attr name="rightEditText_Height"/>
+    </declare-styleable>
+    <declare-styleable name="CustomLayout_TextView_EditText_CheckBox">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_ID"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_TextAlignment"/>
+        <attr name="rightEditText_Height"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+        <attr name="bottomCheckBox_ID"/>
+        <attr name="bottomCheckBox_Text"/>
+
+    </declare-styleable>
+    <declare-styleable name="CustomLayout_TextView_EditText_ImageButton_EditText">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_ID"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+        <attr name="rightImageButton_ID"/>
+        <attr name="rightImageButton_Resource"/>
+        <attr name="bottomEditText_ID"/>
+        <attr name="bottomEditText_Text"/>
+        <attr name="bottomEditText_ImeOptions"/>
+        <attr name="bottomEditText_InputType"/>
+        <attr name="bottomEditText_MaxLength"/>
+        <attr name="bottomEditText_MaxLines"/>
+        <attr name="bottomEditText_PrivateImeOptions"/>
+        <attr name="rightEditText_TextAlignment"/>
+        <attr name="rightEditText_Height"/>
+        <attr name="bottomEditText_TextAlignment"/>
+        <attr name="bottomEditText_Height"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_HypherText">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="leftTextView_TextSize"/>
+        <attr name="rightHypherText_ID"/>
+        <attr name="rightHypherText_Text"/>
+    </declare-styleable>
+    <declare-styleable name="CustomLayout_TextView_HypherText_TextView">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightHypherText_ID"/>
+        <attr name="rightHypherText_Text"/>
+        <attr name="bottomTextView_TextColor"/>
+        <attr name="bottomTextView_Text"/>
+
+
+    </declare-styleable>
+    <declare-styleable name="CustomLayout_TextView_Spinner">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightSpinner_ID"/>
+        <attr name="rightSpinner_Mode"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_Spinner_Button">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightSpinner_ID"/>
+        <attr name="rightButton_ID"/>
+        <attr name="rightButton_Text"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_TextView">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Tag"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="leftTextView_textStyle"/>
+        <attr name="rightTextView_ID"/>
+        <attr name="rightTextView_Text"/>
+        <attr name="rightTextView_TextColor"/>
+        <attr name="rightTextView_Lines"/>
+    </declare-styleable>
+    <declare-styleable name="CustomLayout_TextView_TextView_Button">
+        <attr name="CustomStyle"/>
+        <attr name="rightImageButton_Resource"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="leftTextView_textStyle"/>
+        <attr name="rightTextView_ID"/>
+        <attr name="rightTextView_Text"/>
+        <attr name="rightTextView_Text2"/>
+        <attr name="rightTextView_TextColor"/>
+        <attr name="rightTextView_Lines"/>
+    </declare-styleable>
+    <declare-styleable name="ConsumerItem">
+        <attr name="title_name" format="reference|string" />
+        <attr name="stats" format="reference|string" />
+        <attr name="lamp" format="reference|integer" />
+        <attr name="textColor" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="ListItem">
+        <attr name="title" format="string" />
+        <attr name="text" format="reference|string" />
+    </declare-styleable>
+
+    <declare-styleable name="RateListItem">
+        <attr name="date" format="reference|string" />
+        <attr name="cost" format="reference|string" />
+        <attr name="arrears" format="reference|string" />
+        <attr name="upValue" format="reference|string" />
+        <attr name="upUse" format="reference|string" />
+        <attr name="downValue" format="reference|string" />
+        <attr name="downUse" format="reference|string" />
+    </declare-styleable>
+
+    <attr name="rightEditText_Height" format="reference|dimension"/>
+
+    <attr name="rightEditText_TextAlignment">
+        <flag name="inherit" value="0x00000000"/>
+        <flag name="gravity" value="0x00000001"/>
+        <flag name="textStart" value="0x00000002"/>
+        <flag name="textEnd" value="0x00000003"/>
+        <flag name="center" value="0x00000004"/>
+        <flag name="viewStart" value="0x00000005"/>
+        <flag name="viewEnd" value="0x00000006"/>
+    </attr>
+
+
+
+    <attr name="rightTextView_Lines" format="reference|integer"/>
+
+    <attr name="bottomEditText_Text" format="reference|string"/>
+    <attr name="bottomEditText_Height" format="reference|dimension"/>
+
+
+
+    <attr name="bottomEditText_TextAlignment">
+        <flag name="inherit" value="0x00000000"/>
+        <flag name="gravity" value="0x00000001"/>
+        <flag name="textStart" value="0x00000002"/>
+        <flag name="textEnd" value="0x00000003"/>
+        <flag name="center" value="0x00000004"/>
+        <flag name="viewStart" value="0x00000005"/>
+        <flag name="viewEnd" value="0x00000006"/>
+    </attr>
+
+
+
+
+    <declare-styleable name="CustomLayout_TextView_EditText" >
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+        <attr name="rightEditText_TextAlignment"/>
+        <attr name="rightEditText_Height"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_EditText_Backup">
+        <attr name="leftTextView_Text"/>
+        <attr name="rightEditText_Text"/>
+        <attr name="rightEditText_ImeOptions"/>
+        <attr name="rightEditText_InputType"/>
+        <attr name="rightEditText_MaxLength"/>
+        <attr name="rightEditText_MaxLines"/>
+        <attr name="rightEditText_PrivateImeOptions"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_PickerDateTime">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_PickerDateTime_PickerDateTime">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="leftPickerDate_Text" format="reference|string"/>
+        <attr name="leftPickerDate_TextColor" format="reference|integer"/>
+        <attr name="leftPickerTime_Text" format="reference|string"/>
+        <attr name="leftPickerTime_TextColor" format="reference|integer"/>
+        <attr name="rightPickerDate_Text" format="reference|string"/>
+        <attr name="rightPickerDate_TextColor" format="reference|integer"/>
+        <attr name="rightPickerTime_Text" format="reference|string"/>
+        <attr name="rightPickerTime_TextColor" format="reference|integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomLayout_TextView_PickerDate">
+        <attr name="CustomStyle"/>
+        <attr name="leftTextView_Text"/>
+        <attr name="PickerDate_Text" format="reference|string"/>
+        <attr name="PickerDate_TextColor" format="reference|integer"/>
+    </declare-styleable>
+</resources>
