@@ -51,6 +51,7 @@ class Activity_ViewPager : Activity_Base() {
         // if ("Fragment_Return".equals(Fragment)) {
         try {
             _pagerAdapter!!.addFragment(Class.forName("com.emaintec.$Fragment").newInstance() as Fragment)
+
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -69,6 +70,7 @@ class Activity_ViewPager : Activity_Base() {
                 //getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 finish()
         }
+//        (_pagerAdapter!!.getItem(0) as Fragment_Base).updateUI()
     }
 
     fun addFragment(fragment: Fragment_Base)

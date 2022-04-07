@@ -5,6 +5,8 @@ import com.emaintec.lib.base.Model
 
 class PmDayCpModel: Model {
     constructor() {}
+
+
     var PM_NOTI_NO:String = ""
     var CHK_NO:String = ""
     var CHK_SEQ:String = ""
@@ -35,5 +37,5 @@ class PmDayCpModel: Model {
     var CHK_MIN:String = ""
     var CHK_DEST:String = ""
     var CHK_MAX:String = ""
-
+    val PM_TAG_NO:String = ""
 }

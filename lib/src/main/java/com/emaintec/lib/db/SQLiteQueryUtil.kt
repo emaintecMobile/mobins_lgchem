@@ -8,6 +8,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.sql.SQLException
+import java.util.HashMap
 
 object SQLiteQueryUtil{
     var DB_NAME = ""
@@ -22,7 +23,6 @@ object SQLiteQueryUtil{
             for (i in 0 until nColumns) {
                 val colName: String = crs.getColumnName(i)
                 if (colName != null) {
-                    val `val` = ""
                     try {
                         when (crs.getType(i)) {
                             Cursor.FIELD_TYPE_BLOB -> row.put(colName, crs.getBlob(i).toString())
@@ -41,6 +41,46 @@ object SQLiteQueryUtil{
         crs.close() // close the cursor
         sqLiteDatabase.close()
         return arr
+    }
+    fun selectArrayMap(strQuery: String):   ArrayList<Map<String, String>> {
+        val sqLiteDatabase = DBSwitcher.instance.getReadableDatabase(DB_NAME)!!
+        var crs = sqLiteDatabase.rawQuery(strQuery, null)!!
+        val arr = ArrayList<Map<String, String>>()
+        crs.moveToFirst()
+        while (!crs.isAfterLast()) {
+            val nColumns: Int = crs.getColumnCount()
+            val row =  HashMap<String, String>()
+            for (i in 0 until nColumns) {
+                val colName: String = crs.getColumnName(i)
+                if (colName != null) {
+                     row.put(colName, crs.getString(i))
+                 }
+            }
+            arr.add(row)
+            if (!crs.moveToNext()) break
+        }
+        crs.close() // close the cursor
+        sqLiteDatabase.close()
+        return arr
+    }
+    fun selectMap(strQuery: String):   Map<String, String> {
+        val sqLiteDatabase = DBSwitcher.instance.getReadableDatabase(DB_NAME)!!
+        var crs = sqLiteDatabase.rawQuery(strQuery, null)!!
+        crs.moveToFirst()
+        val row =  HashMap<String, String>()
+        while (!crs.isAfterLast()) {
+            val nColumns: Int = crs.getColumnCount()
+            for (i in 0 until nColumns) {
+                val colName: String = crs.getColumnName(i)
+                if (colName != null) {
+                    row.put(colName, crs.getString(i))
+                }
+            }
+            if (!crs.moveToNext()) break
+        }
+        crs.close() // close the cursor
+        sqLiteDatabase.close()
+        return row
     }
     fun update_table_Model(dto : Object,strTableName: String, keys: Array<String?>): String {
         var newRowId: Long = 0

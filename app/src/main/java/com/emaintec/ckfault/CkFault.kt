@@ -1,4 +1,4 @@
-package com.emaintec.ckdaily
+package com.emaintec.ckfault
 
 import android.os.Bundle
 import android.view.Gravity
@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.emaintec.Data
 import com.emaintec.Fragment_Base
-import com.emaintec.Functions
+import com.emaintec.ckdaily.CkDayItem
 import com.emaintec.ckdaily.model.PmDayMstModel
 import com.emaintec.ckmst.model.PmMstrModel
 import com.emaintec.common.commonViewAdapter
@@ -20,30 +19,24 @@ import com.emaintec.lib.network.NetworkProgress
 import com.emaintec.lib.util.setOneClickListener
 import com.emaintec.mobins.R
 import com.emaintec.mobins.databinding.CkDayHdrBinding
+import com.emaintec.mobins.databinding.CkFaultBinding
 import com.emaintec.mobins.databinding.CkMstHdrBinding
 import com.google.gson.Gson
-import org.json.JSONObject
 
-class CkDayHdr: Fragment_Base()  {
-    lateinit var binding : CkDayHdrBinding
+class CkFault: Fragment_Base()  {
+    lateinit var binding : CkFaultBinding
     var adapterView = commonViewAdapter<PmDayMstModel>()
         .apply { this.ClassItem = PmDayMstModel::class.java }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = CkDayHdrBinding.inflate(inflater,container,false)
+        binding = CkFaultBinding.inflate(inflater,container,false)
         return binding.root//inflater.inflate(R.layout.ck_result_hdr, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initViewList()
         initButton()
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        updateUI()
+        updateList()
     }
     private fun initViewList() {
         val recyclerView = binding.listView
@@ -62,7 +55,8 @@ class CkDayHdr: Fragment_Base()  {
         adapterView.setOnItemTapListener(object :
             RecyclerViewAdapter.OnItemTapListener {
             override fun onDoubleTap(position: Int) {
-                showckResultDtl()
+                adapterView.currentItem?.let { item ->
+                }
             }
             override fun onSingleTap(position: Int) {
             }
@@ -74,23 +68,20 @@ class CkDayHdr: Fragment_Base()  {
 
     }
 
-    private fun updateList(strQrCode: String ="") {
+    private fun updateList() {
         NetworkProgress.start(requireContext())
         adapterView.clear()
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
-            select * from TB_PM_DAYMST where 1=1
+            SELECT * FROM TB_PM_DAYMST WHERE 1=1
             ${
                 if(binding.editTextSearch.text.toString().isNotBlank()) {
-                    "and PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%'"
+                    "AND PM_TAG_NO LIKE '%${binding.editTextSearch.text.toString()}%'"
                 }else{""}
+
             }
-            ${
-                if(strQrCode.isNotBlank()) {
-                    "and PM_EQP_NO = '$strQrCode'"
-                }else{""}
-            }
-            order by PM_PLN_DT,PM_EQP_NO
+            AND PM_STRANGE = 'Y'
+            ORDER BY PM_PLN_DT,PM_EQP_NO
         """.trimIndent()
         )
         val list = Gson().fromJson(jArr.toString(), Array<PmDayMstModel>::class.java)
@@ -101,40 +92,6 @@ class CkDayHdr: Fragment_Base()  {
             adapterView.selection = 0
         }
         NetworkProgress.end()
-        if(strQrCode.isNotBlank()) {
-            binding.buttonCheckPoint.post {
-                binding.buttonCheckPoint.performClick()
-            }
-        }
-    }
-
-    override fun updateUI() {
-        super.updateUI()
-        if(Data.instance._mode.equals("NEW")){
-            binding.buttonCheckPoint.post {
-                CkDayItem().let {
-                    it.setStyle(STYLE_NORMAL, R.style.FullDialogTheme) // 전체 화면
-                    it.showNow(parentFragmentManager, "")
-                    it.dialog?.window?.let { window ->
-                        val params = window.attributes
-                        params.width = ViewGroup.LayoutParams.MATCH_PARENT
-                        params.height = ViewGroup.LayoutParams.MATCH_PARENT
-                        window.attributes = params as android.view.WindowManager.LayoutParams
-                        window.setGravity(Gravity.TOP)
-                        window.setWindowAnimations(android.R.style.Animation_Translucent) // 화면 표시 애니메이션
-                    }
-                    it.dialog!!.setOnDismissListener {
-                        Emaintec.fragment = this
-                        updateList()
-                    }
-                    it.updateUI()
-                }
-            }
-        }else {
-            updateList(Data.instance.scanData)
-        }
-        Data.instance.scanData = ""
-
     }
 
     private fun initButton() {
@@ -169,10 +126,5 @@ class CkDayHdr: Fragment_Base()  {
                 it.updateUI()
             }
         }
-    }
-    override fun onScanMsg(strQrCode: String) {
-        Data.instance.scanData = strQrCode
-        updateList(Data.instance.scanData)
-        Data.instance.scanData = ""
     }
 }

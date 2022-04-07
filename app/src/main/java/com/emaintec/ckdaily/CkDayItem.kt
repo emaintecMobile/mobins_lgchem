@@ -32,8 +32,6 @@ class CkDayItem : Fragment_Base() {
     var standBy = "Y"
     var stranger = "N"
     var PM_EQP_NO = ""
-    var PM_TAG_NO = ""
-    var PM_EQP_NM = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = CkDayItemBinding.inflate(inflater, container, false)
         return binding.root//inflater.inflate(R.layout.ck_result_hdr, container, false)
@@ -44,7 +42,7 @@ class CkDayItem : Fragment_Base() {
         initRadioButton()
         initViewList()
         initButton()
-        updateList()
+
     }
 
     private fun initRadioButton() {
@@ -58,7 +56,15 @@ class CkDayItem : Fragment_Base() {
         binding.radioGroupStandBy.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioStandByYes -> standBy = "Y"
-                R.id.radioStandByNo -> standBy = "N"
+                R.id.radioStandByNo -> {
+                    standBy = "N"
+                    adapterView._arrayList.forEach {
+                        it.CHK_RESULT = ""
+                        it.CHK_OKNOK = "OK"
+                    }
+                    adapterView.notifyDataSetChanged()
+                }
+
             }
         }
         binding.radioGroupStranger.setOnCheckedChangeListener { group, checkedId ->
@@ -94,6 +100,7 @@ class CkDayItem : Fragment_Base() {
         recyclerView.setItemViewCacheSize(50)
         adapterView.setOnCellClickListener(object : CkDayItemGridAdapter.OnCellClickListener {
             override fun onCellClick(position: Int, columnName: String) {
+                if(standBy.equals("N")) return
                 adapterView.selection = position
                 when(columnName){
                     "CHK_DESC" ->{
@@ -207,13 +214,15 @@ class CkDayItem : Fragment_Base() {
         )
     }
 
-    private fun updateList() {
+    private fun updateList(strQrCode: String="") {
         NetworkProgress.start(requireContext())
+        if(strQrCode.isNotEmpty()) PM_EQP_NO = strQrCode
         adapterView.clear()
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
             SELECT A.* 
                   , B.CHK_MIN , B.CHK_DEST, B.CHK_MAX ,B.CHK_UNIT,B.CHK_CHAR,B.CHK_UNIT 
+                  , (SELECT PM_TAG_NO FROM TB_PM_DAYMST WHERE PM_EQP_NO = '$PM_EQP_NO') PM_TAG_NO
               FROM TB_PM_DAYCP A, TB_PM_MSTCP B 
              WHERE 1=1
               AND A.PM_PLAN = B.PM_PLAN
@@ -222,7 +231,7 @@ class CkDayItem : Fragment_Base() {
               AND A.CHK_NO = B.CHK_NO
             ${
                 if (PM_EQP_NO.isBlank()) {
-                    "AND 111"
+                    "AND A.PM_EQP_NO  = (SELECT PM_EQP_NO FROM TB_PM_DAYMST WHERE PM_TAG_NO = '${binding.editTextSearch.text.toString()}')"
                 } else {
                     "AND A.PM_EQP_NO  = '$PM_EQP_NO'"
                 }
@@ -243,18 +252,76 @@ class CkDayItem : Fragment_Base() {
             binding.editTextSpecial.editTextDialog.setText(adapterView._arrayList.filter { it.CHK_DESC.contains(Data.instance.m_strChkDmyIden)}[0].CHK_MEMO)
         }
         if(list.isNotEmpty()) {
+            PM_EQP_NO = adapterView._arrayList[0].PM_EQP_NO
+            var itemHdr = getPmMstInfo()
+            binding.editTextSearch.setText(itemHdr?.PM_TAG_NO)
             adapterView.selection = 0
+            if(adapterView._arrayList[0].PM_STANDBY.equals("N")){
+                binding.radioStandByNo.isChecked = true
+            }
         }
         NetworkProgress.end()
     }
+    private fun updateListNew(strQrCode: String="") {
+        NetworkProgress.start(requireContext())
+        if(strQrCode.isNotEmpty()) PM_EQP_NO = strQrCode
+        adapterView.clear()
+        val jArr = SQLiteQueryUtil.selectJsonArray(
+            """
+            SELECT  *
+                  , (SELECT PM_TAG_NO FROM TB_PM_DAYMST WHERE PM_EQP_NO = '$PM_EQP_NO') PM_TAG_NO
+                  , (SELECT MAX(PM_NOTI_NO) FROM TB_PM_DAYCP)  PM_NOTI_NO
+                   , '${Functions.DateUtil.getDate("yyyyMMdd")}'  PM_PLN_DT
+              FROM  TB_PM_MSTCP 
+             WHERE 1=1
+             AND PM_EQP_NO  = '$PM_EQP_NO'
+            order by CHK_NO
+        """.trimIndent()
+        )
+        val list = Gson().fromJson(jArr.toString(), Array<PmDayCpModel>::class.java)
+        for (item in list!!) {
+            if (item.CHK_OKNOK.isNullOrBlank()) item.CHK_OKNOK = "OK"
+            adapterView.addItem(item)
+        }
 
+        if(adapterView._arrayList.filter { it.CHK_DESC.contains(Data.instance.m_strChkDmyIden) }.size==0){
+            binding.layoutSpecial.visibility = View.GONE
+        }else{
+            binding.layoutSpecial.visibility = View.VISIBLE
+            binding.editTextSpecial.editTextDialog.setText(adapterView._arrayList.filter { it.CHK_DESC.contains(Data.instance.m_strChkDmyIden)}[0].CHK_MEMO)
+        }
+        if(list.isNotEmpty()) {
+            PM_EQP_NO = adapterView._arrayList[0].PM_EQP_NO
+            var itemHdr = getPmMstInfo()
+            binding.editTextSearch.setText(itemHdr?.PM_TAG_NO)
+            adapterView.selection = 0
+            if(adapterView._arrayList[0].PM_STANDBY.equals("N")){
+                binding.radioStandByNo.isChecked = true
+            }
+        }
+        NetworkProgress.end()
+    }
     private fun initButton() {
-
+        binding.customLayoutTitle.imageButton.setOneClickListener {
+            dialog?.dismiss()
+            dismiss()
+        }
         binding.buttonInquery.setOneClickListener {
+            PM_EQP_NO = ""
             updateList()
         }
 
         binding.buttonSave.setOneClickListener {
+            if(standBy.equals("Y")){
+                adapterView._arrayList.filter { it.CHK_IN_TYP.equals("X") && it.CHK_CHAR.isNotEmpty() && it.CHK_RESULT.isNullOrEmpty() }.forEach {
+                    val idx = adapterView._arrayList.indexOf(it)
+                    adapterView.selection = idx
+                    adapterView.listView?.scrollToPosition(idx)
+                    adapterView.listView?.findViewHolderForLayoutPosition(idx)
+                        ?.let { Functions.highlightGrid("점검결과입력이 완료되지 않았습니다.", it) }
+                    return@setOneClickListener
+                }
+            }
             save()
         }
     }
@@ -295,17 +362,16 @@ class CkDayItem : Fragment_Base() {
         """.trimIndent()
         )
         val list = Gson().fromJson(jArr.toString(), Array<PmDayMstModel>::class.java)
-
         if(list.isEmpty()) {
             val jArr = SQLiteQueryUtil.selectJsonArray(
                 """
             SELECT PM_EQP_NO,PM_TAG_NO,PM_EQP_NM,
-                    '${Functions.DateUtil.getDate()}' PM_PLN_DT ,'Y' PM_CHECK,
+                    '${Functions.DateUtil.getDate("yyyyMMdd")}' PM_PLN_DT ,'Y' PM_CHECK,
                     '${stranger}' PM_STRANGE,
                     'N' CHK_NOTI
               FROM TB_PM_MASTER  
              WHERE 1=1
-               AND A.PM_EQP_NO  = '$PM_EQP_NO'"
+               AND PM_EQP_NO  = '$PM_EQP_NO'
         """.trimIndent()
             )
             val list = Gson().fromJson(jArr.toString(), Array<PmDayMstModel>::class.java)
@@ -321,6 +387,7 @@ class CkDayItem : Fragment_Base() {
             CkDayItemInput().let {
                 it.adapterView = adapterView
                 it.showNow(parentFragmentManager, "")
+                it.dialog?.setCanceledOnTouchOutside(false);
                 it.dialog?.window?.let { window ->
                     val params = window.attributes
                     params.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -348,7 +415,18 @@ class CkDayItem : Fragment_Base() {
 
     override fun updateUI() {
         super.updateUI()
-        binding.editTextSearch.setText(PM_TAG_NO)
+        if( Data.instance._mode.equals("NEW")){
+            PM_EQP_NO =  Data.instance._modeData
+            updateListNew()
+        }else {
+            updateList()
+        }
+        Data.instance._mode = ""
+        Data.instance._modeData = ""
+    }
 
+    override fun onScanMsg(strQrCode: String) {
+        super.onScanMsg(strQrCode)
+        updateList(strQrCode)
     }
 }

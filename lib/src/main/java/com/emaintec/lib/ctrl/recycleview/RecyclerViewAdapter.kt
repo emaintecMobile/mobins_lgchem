@@ -205,8 +205,10 @@ fun prev(): Boolean {
         _position--
         listView?.scrollToPosition(max(_position - 1, 0))
         this.notifyDataSetChanged()
+        return true
+    }else{
+        return false
     }
-    return _position > 0
 }
 
 operator fun next(): Boolean {
@@ -214,8 +216,10 @@ operator fun next(): Boolean {
         _position++
         listView?.scrollToPosition(min(_position + 1, _arrayList.size - 1))
         this.notifyDataSetChanged()
+        return true
+    }else{
+        return false
     }
-    return _position < _arrayList.size - 1
 }
 
 override fun getItemCount(): Int {

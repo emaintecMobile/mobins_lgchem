@@ -79,8 +79,9 @@ class dataSync : Fragment_Base() {
     }
 
     private fun upload() {
-        NetworkProgress.end()
+
         NetworkProgress.start(activity!!)
+        NetworkProgress.end()
     }
 
     private fun download() {

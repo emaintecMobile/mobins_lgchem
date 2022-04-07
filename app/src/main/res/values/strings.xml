@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LG화학 나주공장</string>
-    <string name="appwidget_text">모바일 설비관리</string>
-    <string name="add_widget">Add widget</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="app_name">LGChemCk</string>
 </resources>

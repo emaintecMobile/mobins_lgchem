@@ -32,6 +32,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.device.Device
 import com.emaintec.lib.network.*
@@ -495,7 +496,39 @@ object Functions {
             it.start()
         }
     }
+    fun highlightGrid(message: String, vararg views: RecyclerView.ViewHolder) {
+        ValueAnimator.ofObject(ArgbEvaluator(), Color.argb(150, 255, 0, 0), Color.TRANSPARENT).let {
+            it.duration = 250
+            it.repeatCount = 2
+            it.addUpdateListener { animator ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    views.forEach { view ->
+                        view.itemView.foreground = ColorDrawable(animator.animatedValue as Int)
+                    }
+                } else {
+                    views.forEach { view ->
+                        view.itemView.background = ColorDrawable(animator.animatedValue as Int)
+                    }
+                }
+            }
+            it.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
 
+                override fun onAnimationEnd(animation: Animator?) {
+                    MessageBox(Emaintec.activity!!, message)
+//                    Toast.makeText(Emaintec.activity!!, message, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                }
+            })
+            it.start()
+        }
+    }
 
     fun addTextLabel(line: LinearLayout, label: String, contents: String,type:Int=0) {
 

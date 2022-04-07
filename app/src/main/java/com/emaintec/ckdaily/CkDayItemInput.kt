@@ -61,13 +61,19 @@ class CkDayItemInput : Fragment_Base() {
             dismiss()
         }
         binding.buttonPrev!!.setOnClickListener {
-            adapterView.prev()
-            updateUI()
+            if(adapterView.prev()) {
+                updateUI()
+            }else{
+                binding.customLayoutTitle.imageButton.performClick()
+            }
         }
 
         binding.buttonNext!!.setOnClickListener {
-            adapterView.next()
-            updateUI()
+            if(adapterView.next()) {
+                updateUI()
+            }else{
+                binding.customLayoutTitle.imageButton.performClick()
+            }
         }
 
         binding.buttonStatusO.setOnClickListener {
@@ -110,9 +116,10 @@ class CkDayItemInput : Fragment_Base() {
             binding.layoutNum.visibility = View.VISIBLE
             binding.editTextNumValue.setSelectAllOnFocus(true);
             binding.editTextNumValue.requestFocus()
-
-            val inputMethodManager: InputMethodManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(binding.editTextNumValue, InputMethodManager.SHOW_IMPLICIT)
+            binding.editTextNumValue.post {
+                val inputMethodManager: InputMethodManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(binding.editTextNumValue, InputMethodManager.SHOW_IMPLICIT)
+            }
         }else{
             binding.layoutNum.visibility = View.GONE
             val inputMethodManager: InputMethodManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

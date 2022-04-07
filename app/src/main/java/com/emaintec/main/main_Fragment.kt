@@ -4,25 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.emaintec.Activity_ViewPager
 import com.emaintec.Data
-import com.emaintec.Fragment_Base
-import com.emaintec.ckdaily.model.PmDayMstModel
-import com.emaintec.datasync.dataSync
-import com.emaintec.external.zxing.IntentIntegrator
+import com.emaintec.Functions
 import com.emaintec.lib.base.Emaintec
-import com.emaintec.lib.ctrl.recycleview.RecyclerViewAdapter
 import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.util.setOneClickListener
-import com.emaintec.mobins.Activity_Main
-import com.emaintec.mobins.Menu
-import com.emaintec.mobins.R
 import com.emaintec.mobins.databinding.MainFragmentBinding
 import com.google.gson.Gson
 
@@ -42,6 +32,12 @@ class main_Fragment : com.emaintec.Fragment_Base() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==1000){
             updateUI()
+            if(resultCode == Activity.RESULT_OK) {
+                val PM_EQP_NO: String = data?.extras?.getString("PM_EQP_NO").toString()
+                Data.instance._mode = "NEW"
+                Data.instance._modeData = PM_EQP_NO
+                binding.btnCkDaily.performClick()
+            }
         }
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -63,6 +59,12 @@ class main_Fragment : com.emaintec.Fragment_Base() {
             intent.putExtra("title", "일일점검관리")
             startActivityForResult(intent, 1000)
         }
+        binding.btnCkFault.setOneClickListener {
+            val intent = Intent(activity, Activity_ViewPager::class.java)
+            intent.putExtra("menu", "ckfault.CkFault")
+            intent.putExtra("title", "이상설비현황")
+            startActivityForResult(intent, 1000)
+        }
         binding.btnDataSync.setOneClickListener {
             val intent = Intent(activity, Activity_ViewPager::class.java)
             intent.putExtra("menu", "datasync.dataSync")
@@ -72,6 +74,7 @@ class main_Fragment : com.emaintec.Fragment_Base() {
     }
 
     override fun updateUI() {
+        Emaintec.fragment = this
         if (view == null) return
         Log.d("main_fragement", "updateui---")
         binding.textViewLoginMsg.text =
@@ -96,7 +99,25 @@ class main_Fragment : com.emaintec.Fragment_Base() {
     }
 
     override fun onScanMsg(strQrCode: String) {
-
+        Data.instance.scanData = strQrCode
+        val jArr = SQLiteQueryUtil.selectMap(
+            """SELECT
+                (SELECT count(*) 
+                FROM TB_PM_DAYMST
+                WHERE PM_EQP_NO = '$strQrCode') DAYCNT
+                ,
+                (SELECT count(*) 
+                FROM TB_PM_MASTER
+                WHERE PM_EQP_NO = '$strQrCode') MSTCNT
+        """.trimIndent()
+        )
+        if(!jArr["DAYCNT"].toString().equals("0")){
+            binding.btnCkDaily.performClick()
+        }else if(!jArr["MSTCNT"].toString().equals("0")){
+            binding.btnCkMst.performClick()
+        }else{
+            Functions.MessageBox(requireContext(),"없는 설비번호입니다.")
+        }
     }
 
     override fun onResume() {

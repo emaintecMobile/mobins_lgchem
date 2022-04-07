@@ -23,6 +23,9 @@ class Data private constructor() {
     var _workCenterNm = ""
     var m_strChkDmyIden = "특기사항"
     var _downDate = ""
+    var scanData = ""
+    var _mode = ""
+    var _modeData = ""
     private var timer: Timer? = null
     private var handler: Handler? = null
     val LOGOUT_TIME_MIN = 30

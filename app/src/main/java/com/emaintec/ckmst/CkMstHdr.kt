@@ -1,5 +1,7 @@
 package com.emaintec.ckmst
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emaintec.Fragment_Base
+import com.emaintec.Functions
 import com.emaintec.ckmst.model.PmMstrModel
 import com.emaintec.common.commonViewAdapter
 import com.emaintec.common.model.gridViewModel
@@ -19,12 +22,13 @@ import com.emaintec.mobins.R
 import com.emaintec.mobins.databinding.CkMstHdrBinding
 import com.google.gson.Gson
 
-class CkMstHdr: Fragment_Base()  {
-    lateinit var binding : CkMstHdrBinding
+class CkMstHdr : Fragment_Base() {
+    lateinit var binding: CkMstHdrBinding
     var adapterView = commonViewAdapter<PmMstrModel>()
         .apply { this.ClassItem = PmMstrModel::class.java }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = CkMstHdrBinding.inflate(inflater,container,false)
+        binding = CkMstHdrBinding.inflate(inflater, container, false)
         return binding.root//inflater.inflate(R.layout.ck_result_hdr, container, false)
     }
 
@@ -34,6 +38,7 @@ class CkMstHdr: Fragment_Base()  {
         initButton()
         updateList()
     }
+
     private fun initViewList() {
         val recyclerView = binding.listView
         adapterView.gridSetting = arrayListOf(
@@ -53,11 +58,12 @@ class CkMstHdr: Fragment_Base()  {
         adapterView.setOnItemTapListener(object :
             RecyclerViewAdapter.OnItemTapListener {
             override fun onDoubleTap(position: Int) {
-                adapterView.currentItem?.let { item ->
-                }
+                showckResultDtl()
             }
+
             override fun onSingleTap(position: Int) {
             }
+
             override fun onLongTap(position: Int): Boolean {
                 return true
             }
@@ -73,10 +79,12 @@ class CkMstHdr: Fragment_Base()  {
             """
             select * from TB_PM_MASTER where 1=1
             ${
-                if(binding.editTextSearch.text.toString().isNotBlank()) {
+                if (binding.editTextSearch.text.toString().isNotBlank()) {
                     "and PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%'"
-                }else{""}
-                
+                } else {
+                    ""
+                }
+
             }
         """.trimIndent()
         )
@@ -84,7 +92,7 @@ class CkMstHdr: Fragment_Base()  {
         for (item in list!!) {
             adapterView.addItem(item)
         }
-        if(list.isNotEmpty()) {
+        if (list.isNotEmpty()) {
             adapterView.selection = 0
         }
         NetworkProgress.end()
@@ -96,17 +104,36 @@ class CkMstHdr: Fragment_Base()  {
             updateList()
         }
         binding.buttonCheckPoint.setOneClickListener {
-            adapterView.currentItem?.let { item ->
-                showckResultDtl()
+            showckResultDtl()
+        }
+        binding.buttonDailyNew.setOneClickListener {
+            newDailyCk()
+        }
+    }
+
+    private fun newDailyCk() {
+        adapterView.currentItem?.let { item ->
+
+           val map  = SQLiteQueryUtil.selectMap("""
+                SELECT COUNT(*) CNT FROM TB_PM_DAYMST WHERE PM_EQP_NO = '${item.PM_EQP_NO}'""".trimIndent())
+            if(map["CNT"].toString().equals("0"))
+            {
+                val intentR = Intent()
+                intentR.putExtra("PM_EQP_NO", item.PM_EQP_NO) //사용자에게 입력받은값 넣기
+                requireActivity().setResult(RESULT_OK, intentR) //결과를 저장
+                requireActivity().finish()
+            }else{
+                Functions.MessageBox(requireContext(),"일일점검대상 설비입니다.추가할수 없습니다")
             }
         }
     }
+
     private fun showckResultDtl() {
-        adapterView.currentItem?.let { item->
+        adapterView.currentItem?.let { item ->
             CkMstItem().let {
                 it.setStyle(STYLE_NORMAL, R.style.FullDialogTheme) // 전체 화면
                 it.PM_EQP_NO = item.PM_EQP_NO
-                it.PM_GROUP =  item.PM_GROUP
+                it.PM_GROUP = item.PM_GROUP
                 it.PM_PLAN = item.PM_PLAN
                 it.PM_TAG_NO = item.PM_TAG_NO
                 it.showNow(parentFragmentManager, "")
