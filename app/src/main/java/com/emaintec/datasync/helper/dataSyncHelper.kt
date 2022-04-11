@@ -3,9 +3,14 @@ package com.emaintec.datasync.helper
 import androidx.annotation.WorkerThread
 import com.emaintec.Data
 import com.emaintec.Define
+import com.emaintec.ckdaily.model.PmDayMstModel
+import com.emaintec.datasync.model.UpDayCpModel
 import com.emaintec.lib.db.DBSwitcher
 import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.network.*
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import org.json.JSONObject
 
 
@@ -123,22 +128,50 @@ object dataSyncHelper {
                 action(false, jsonObject.get("message").toString())
             })
         }
-
-        fun updateTM_CHECK_HDR(CHECK_SCHEDULE_NO: String, IS_UPLOAD: String): Int {
-            val sqLiteDatabase = DBSwitcher.instance.getWritableDatabase(Define.DB_NAME_1)!!
-
-            val sqLiteStatement =
-                sqLiteDatabase.compileStatement("UPDATE TM_CHECK_HDR SET IS_UPLOAD=? WHERE (CHECK_SCHEDULE_NO = ?)")
-            sqLiteStatement!!.bindObject(1, IS_UPLOAD)
-            sqLiteStatement!!.bindObject(2, CHECK_SCHEDULE_NO)
-
-            sqLiteStatement!!.executeUpdateDelete()
-            val result = sqLiteDatabase.changes
-            sqLiteStatement!!.close()
-            sqLiteDatabase.close()
-
-            return result
+        @WorkerThread
+        suspend fun uploadCheckResult(action: suspend (Boolean, String) -> Unit): Boolean {
+            var bResult = true;
+            val result = SQLiteQueryUtil.selectJsonArray("""
+                SELECT PM_NOTI_NO,CHK_NO,PM_GROUP,PM_PLN_DT,CHK_RESULT,CHK_OKNOK,CHK_MEMO,CHK_DATE,CHK_NOTI,PM_WKCNTR,PM_INST,CHK_TIME,PM_STANDBY
+                  FROM TB_PM_DAYCP
+                 WHERE PM_CHECK = 'Y' 
+            """.trimIndent())
+            val list = Gson().fromJson(result.toString(), Array<UpDayCpModel>::class.java)
+            NetworkSync(
+                TransmitterJson(
+                    url = Data.instance.url + "/ct_broker.jsp",
+                    action = "ct_biz.up_result.IGetDataEx",
+                    jsondata = "[]",
+                    result = result.toString()
+                ), ReceiverJson()
+            ).get(
+                onSuccessed = {
+                    if ((it.receiver.resultData as JSONObject).getBoolean("success")) {
+                        SQLiteQueryUtil.executeSql("""
+                           UPDATE  TB_PM_MASTER  SET  PM_LDATE = (SELECT  MAX(CHK_DATE) FROM  TB_PM_DAYCP WHERE PM_EQP_NO = TB_PM_MASTER.PM_EQP_NO AND PM_CHECK = 'Y' )
+                            WHERE PM_EQP_NO IN (SELECT PM_EQP_NO FROM TB_PM_DAYMST WHERE PM_CHECK = 'Y' )
+                        """.trimIndent())
+                        SQLiteQueryUtil.executeSql("""
+                            UPDATE  TB_PM_MSTCP  SET  CHK_LDATE1 = CHK_LDATE2, CHK_OKNOK1 = CHK_OKNOK2, CHK_LRSLT1 = CHK_LRSLT2,
+                                CHK_LDATE2 = (SELECT CHK_DATE FROM TB_PM_DAYCP WHERE  CHK_NO = TB_PM_MSTCP.CHK_NO AND PM_CHECK = 'Y'),
+                                CHK_OKNOK2 =  (SELECT CHK_OKNOK FROM TB_PM_DAYCP WHERE  CHK_NO = TB_PM_MSTCP.CHK_NO AND PM_CHECK = 'Y'),
+                                CHK_LRSLT2 =  (SELECT CHK_RESULT FROM TB_PM_DAYCP WHERE  CHK_NO = TB_PM_MSTCP.CHK_NO AND PM_CHECK = 'Y')
+                            WHERE CHK_NO IN (SELECT CHK_NO FROM TB_PM_DAYCP WHERE PM_CHECK = 'Y' )
+                        """.trimIndent())
+                        DBSwitcher.instance.sendMessage(SQLiteQueryUtil.DB_NAME, "TB_PM_DAYMST")
+                        DBSwitcher.instance.sendMessage(SQLiteQueryUtil.DB_NAME, "TB_PM_DAYCP")
+                        action(true, "업로드 성공")
+                    } else {
+                        action(false, (it.receiver.resultData as JSONObject).getString("message"))
+                    }
+                }, onFailed = {
+                    val jsonObject = JSONObject(it.receiver.errorData!!)
+                    bResult = false;
+                }
+            )
+            return bResult;
         }
+
     }
 
 }

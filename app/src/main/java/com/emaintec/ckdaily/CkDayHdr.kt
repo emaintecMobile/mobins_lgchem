@@ -38,9 +38,16 @@ class CkDayHdr: Fragment_Base()  {
 
         initViewList()
         initButton()
+        initRadioButton()
 
     }
+    private fun initRadioButton() {
+        binding.radioTotal.isChecked = true
+        binding.radioGroupCk.setOnCheckedChangeListener { group, checkedId ->
+            updateList()
+        }
 
+    }
     override fun onStart() {
         super.onStart()
         updateUI()
@@ -88,7 +95,14 @@ class CkDayHdr: Fragment_Base()  {
             ${
                 if(strQrCode.isNotBlank()) {
                     "and PM_EQP_NO = '$strQrCode'"
-                }else{""}
+                }else{
+                    when(binding.radioGroupCk.checkedRadioButtonId) {
+                        R.id.radioCkY -> "and PM_CHECK = 'Y'"
+                        R.id.radioCkN -> "and PM_CHECK IS NULL"
+                        R.id.radioCkS ->" and PM_STRANGE = 'Y'"
+                        else ->""
+                    }
+                }
             }
             order by PM_PLN_DT,PM_EQP_NO
         """.trimIndent()
@@ -99,6 +113,8 @@ class CkDayHdr: Fragment_Base()  {
         }
         if(list.isNotEmpty()) {
             adapterView.selection = 0
+        }else{
+            Functions.MessageBox(requireContext(),"없는 설비번호 입니다.")
         }
         NetworkProgress.end()
         if(strQrCode.isNotBlank()) {

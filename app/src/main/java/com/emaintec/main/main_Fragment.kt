@@ -76,13 +76,12 @@ class main_Fragment : com.emaintec.Fragment_Base() {
     override fun updateUI() {
         Emaintec.fragment = this
         if (view == null) return
-        Log.d("main_fragement", "updateui---")
         binding.textViewLoginMsg.text =
             "${Data.instance._workCenterNm} 작업장으로 로그인 했습니다."
         binding.textDnDate.text = "작업현황 다운로드 일자: ${Data.instance._downDate}"
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
-                SELECT (SELECT count(*) from TB_PM_DAYMST ) MASTER_CNT
+                SELECT (SELECT count(*) from TB_PM_MASTER ) MASTER_CNT
                        ,COUNT(*)	   AS DAY_CNT
                        ,SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) AS CHECKED
                        ,SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END) AS STRANGE
@@ -116,19 +115,13 @@ class main_Fragment : com.emaintec.Fragment_Base() {
         }else if(!jArr["MSTCNT"].toString().equals("0")){
             binding.btnCkMst.performClick()
         }else{
-            Functions.MessageBox(requireContext(),"없는 설비번호입니다.")
+            Functions.MessageBox(requireContext(),"없는 설비번호 입니다.")
+            Data.instance.scanData = ""
+            Data.instance._mode= ""
+            Data.instance._modeData = ""
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateUI()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //나의메뉴
-    }
     class StatusModel {
         var MASTER_CNT: String = ""
         var DAY_CNT: String = ""

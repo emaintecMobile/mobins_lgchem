@@ -52,6 +52,48 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/radioGroupCk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/btnApprTxt"
+                        android:checked="true"
+                        android:text="전체" />
+
+                    <RadioButton
+                        android:id="@+id/radioCkY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/btnApprTxt"
+                        android:text="점검" />
+                    <RadioButton
+                        android:id="@+id/radioCkN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/btnApprTxt"
+                        android:text="미점검" />
+                    <RadioButton
+                        android:id="@+id/radioCkS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/btnApprTxt"
+                        android:text="이상설비" />
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

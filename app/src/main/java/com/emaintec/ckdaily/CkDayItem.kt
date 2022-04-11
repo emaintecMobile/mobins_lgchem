@@ -100,21 +100,25 @@ class CkDayItem : Fragment_Base() {
         recyclerView.setItemViewCacheSize(50)
         adapterView.setOnCellClickListener(object : CkDayItemGridAdapter.OnCellClickListener {
             override fun onCellClick(position: Int, columnName: String) {
-                if(standBy.equals("N")) return
+                if(standBy.equals("N")){
+                    Functions.MessageBox(requireContext(),"미가동 설비 입니다.")
+                    return
+                }
                 adapterView.selection = position
                 when(columnName){
                     "CHK_DESC" ->{
                         showInputDtl()
                     }
                     "CHK_RESULT" ->{
-                        if(adapterView.currentItem?.CHK_IN_TYP.equals("X"))
+                        if(adapterView.currentItem?.CHK_CHAR!!.isNotEmpty())
                             showInputDtl()
                     }
                     "CHK_OKNOK" ->{
+                        if(adapterView.currentItem?.CHK_CHAR!!.isNotEmpty()) return
                         var CHECK_STATUS = "OK"
                         if (adapterView.getItem(position).CHK_OKNOK.equals("OK")) CHECK_STATUS = "NOK"
                         else CHECK_STATUS = "OK"
-                        adapterView.getItem(position).STATUS = "U"
+//                        adapterView.getItem(position).STATUS = "U"
                         adapterView.getItem(position).CHK_OKNOK = CHECK_STATUS
                         adapterView.notifyItemChanged(position)
                     }
@@ -259,6 +263,8 @@ class CkDayItem : Fragment_Base() {
             if(adapterView._arrayList[0].PM_STANDBY.equals("N")){
                 binding.radioStandByNo.isChecked = true
             }
+        }else{
+            Functions.MessageBox(requireContext(),"없는 설비번호 입니다.")
         }
         NetworkProgress.end()
     }

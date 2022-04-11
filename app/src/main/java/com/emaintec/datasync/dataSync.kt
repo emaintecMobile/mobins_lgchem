@@ -79,9 +79,16 @@ class dataSync : Fragment_Base() {
     }
 
     private fun upload() {
-
         NetworkProgress.start(activity!!)
-        NetworkProgress.end()
+        CoroutineScope(Dispatchers.Default).launch {
+            var bResult =
+                dataSyncHelper.Check.uploadCheckResult(action = { success: Boolean, msg: String ->
+                    launch(Dispatchers.Main) {
+                        binding.textViewCkDaily.text = msg
+                    }.join()
+                })
+            NetworkProgress.end()
+        }
     }
 
     private fun download() {

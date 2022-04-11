@@ -118,10 +118,9 @@ class Activity_Main : Activity_Base() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val viewPager = findViewById<ViewPager>(R.id.viewPager)
-        val adapter = viewPager.adapter as CustomAdapter?
-        (adapter!!.getItem(0) as main_Fragment).updateUI()
-
+//        val viewPager = findViewById<ViewPager>(R.id.viewPager)
+//        val adapter = viewPager.adapter as CustomAdapter?
+//        (adapter!!.getItem(0) as main_Fragment).updateUI()
     }
 
 

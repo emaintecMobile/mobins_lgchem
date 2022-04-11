@@ -4,13 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.emaintec.Fragment_Base
 import com.emaintec.ckdaily.model.PmDayCpModel
+import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.ctrl.EditTextDialog
+import com.emaintec.lib.util.setOneClickListener
 import com.emaintec.mobins.databinding.CkResultDtlInputBinding
 
 
@@ -93,8 +96,29 @@ class CkDayItemInput : Fragment_Base() {
                 adapterView.notifyItemChanged(adapterView.selection)
             }
         })
+        binding.buttonHst.setOneClickListener {
+            showResultHst()
+        }
     }
-
+    private fun showResultHst(){
+        CkDayItemChart().let {
+            it.item = modelCkDtl
+            it.showNow(parentFragmentManager, "")
+            it.dialog?.setCanceledOnTouchOutside(false);
+            it.dialog?.window?.let { window ->
+                val params = window.attributes
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                window.attributes = params as android.view.WindowManager.LayoutParams
+                window.setGravity(Gravity.TOP)
+                window.setWindowAnimations(android.R.style.Animation_InputMethod)
+            }
+            it.dialog!!.setOnDismissListener {
+                Emaintec.fragment = this
+            }
+            it.updateUI()
+        }
+    }
     override fun updateUI() {
         modelCkDtl = adapterView.currentItem ?: PmDayCpModel()
 
