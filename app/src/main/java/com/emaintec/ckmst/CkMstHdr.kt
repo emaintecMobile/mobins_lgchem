@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emaintec.Data
 import com.emaintec.Fragment_Base
 import com.emaintec.Functions
 import com.emaintec.ckmst.model.PmMstrModel
@@ -72,7 +73,7 @@ class CkMstHdr : Fragment_Base() {
 
     }
 
-    private fun updateList() {
+    private fun updateList(strQrCode: String ="") {
         NetworkProgress.start(requireContext())
         adapterView.clear()
         val jArr = SQLiteQueryUtil.selectJsonArray(
@@ -81,6 +82,14 @@ class CkMstHdr : Fragment_Base() {
             ${
                 if (binding.editTextSearch.text.toString().isNotBlank()) {
                     "and PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%'"
+                } else {
+                    ""
+                }
+
+            }
+            ${
+                if (strQrCode.isNotBlank()) {
+                    "and PM_EQP_NO = '$strQrCode'"
                 } else {
                     ""
                 }
@@ -151,5 +160,9 @@ class CkMstHdr : Fragment_Base() {
                 it.updateUI()
             }
         }
+    }
+    override fun onScanMsg(strQrCode: String) {
+        updateList(strQrCode)
+
     }
 }

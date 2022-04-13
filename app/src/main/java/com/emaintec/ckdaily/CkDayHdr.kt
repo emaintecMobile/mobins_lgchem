@@ -39,7 +39,7 @@ class CkDayHdr: Fragment_Base()  {
         initViewList()
         initButton()
         initRadioButton()
-
+        updateUI()
     }
     private fun initRadioButton() {
         binding.radioTotal.isChecked = true
@@ -50,7 +50,7 @@ class CkDayHdr: Fragment_Base()  {
     }
     override fun onStart() {
         super.onStart()
-        updateUI()
+
     }
     private fun initViewList() {
         val recyclerView = binding.listView
@@ -111,12 +111,16 @@ class CkDayHdr: Fragment_Base()  {
         for (item in list!!) {
             adapterView.addItem(item)
         }
+        NetworkProgress.end()
         if(list.isNotEmpty()) {
             adapterView.selection = 0
         }else{
-            Functions.MessageBox(requireContext(),"없는 설비번호 입니다.")
+            if(strQrCode.isNotBlank()) {
+                Functions.MessageBox(requireContext(), "없는 설비번호 입니다.")
+                return
+            }
         }
-        NetworkProgress.end()
+
         if(strQrCode.isNotBlank()) {
             binding.buttonCheckPoint.post {
                 binding.buttonCheckPoint.performClick()

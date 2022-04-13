@@ -1,18 +1,19 @@
 package com.emaintec.datasync
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import com.emaintec.Data
-import com.emaintec.Define
 import com.emaintec.Fragment_Base
 import com.emaintec.Functions
-import com.emaintec.common.helper.commonHelper
 import com.emaintec.datasync.helper.dataSyncHelper
 import com.emaintec.db.QueryHelper_Setup
-import com.emaintec.lib.db.DBSwitcher
+import com.emaintec.lib.adapter.AdapterMutiSpinner
+import com.emaintec.lib.adapter.ModelMutilSpinner
+import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.network.NetworkProgress
 import com.emaintec.lib.util.setOneClickListener
 import com.emaintec.mobins.R
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 
 class dataSync : Fragment_Base() {
     lateinit var binding: DatasyncBinding
+    private var workCenters = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,27 +45,29 @@ class dataSync : Fragment_Base() {
     }
 
     private fun initSpinner() {
-        val jsonobj = JsonObject()
-        jsonobj.addProperty("DIR_TYPE", "WAREHOUSE")
-        val jsonWareHouse = Gson().toJson(arrayOf(jsonobj))
-        CoroutineScope(Dispatchers.Default).launch {
-            commonHelper.instance.getDirDtlList({ success, list, msg ->
-                if (success) {
-                    launch(Dispatchers.Main) {
-                        if (list != null) {
-                            val adapter = ArrayAdapter(
-                                context!!,
-                                R.layout.custom_spinner_item_left_black,
-                                list
-                            )
-                            adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
-                            binding.spinnerWAREHOUSE.adapter = adapter
-                        }
-                    }.join()
-                }
-            }, jsonWareHouse)
+        NetworkProgress.start(requireContext())
+        val jArr = SQLiteQueryUtil.selectJsonArray(
+            """
+            select WKCNTR_NO CODE,WKCNTR_NM NAME from TB_PM_WKCENTER
+        """.trimIndent()
+        )
+
+        val list = Gson().fromJson(jArr.toString(), Array<ModelMutilSpinner>::class.java)
+        val arrayList = list.toCollection(ArrayList<ModelMutilSpinner>())
+        arrayList.filter { it.CODE.equals(Data.instance._workCenter) }.forEach {
+            it.selected = true
+        }
+        arrayList.add(0, ModelMutilSpinner().also { it.NAME = "${Data.instance._workCenterNm}" })
+        val adapter = AdapterMutiSpinner(requireContext(), R.layout.custom_spinner_check_item, arrayList)
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
+        binding.spinnerWorkCenter.adapter = adapter
+        NetworkProgress.end()
+
+        binding.spinnerWorkCenter.setOnFocusChangeListener { v, hasFocus ->
+            binding.spinnerWorkCenter.adapter = adapter
         }
     }
+
 
     private fun initButton() {
         binding.customLayoutTitle.imageButton.setOneClickListener {
@@ -71,7 +75,18 @@ class dataSync : Fragment_Base() {
             dialog!!.dismiss()
         }
         binding.buttonDownload.setOneClickListener {
-            download()
+            if (binding.switchCkDaily.isChecked) {
+                val map = SQLiteQueryUtil.selectMap("""SELECT COUNT(*) CNT FROM TB_PM_DAYMST WHERE PM_CHECK = 'Y'""")
+                if (!map["CNT"].equals("0")) {
+                    Functions.MessageBox(requireContext(), "점검결과가 존재합니다. 무시하고 새로 다운하시겠습니까?", "알림",
+                        DialogInterface.OnClickListener { dialog, which ->
+                            download()
+                        })
+                }
+            } else {
+                download()
+            }
+
         }
         binding.buttonUpload.setOneClickListener {
             upload()
@@ -92,6 +107,13 @@ class dataSync : Fragment_Base() {
     }
 
     private fun download() {
+
+        workCenters = ""
+        (binding.spinnerWorkCenter.adapter as AdapterMutiSpinner).listState.filter { it.selected }.forEach {
+            workCenters += it.CODE+"!"
+        }
+        workCenters = "!"+workCenters
+
         NetworkProgress.start(activity!!)
         CoroutineScope(Dispatchers.Default).launch {
             if (Functions.UpdateApp.Autoupdate()) return@launch
@@ -107,7 +129,10 @@ class dataSync : Fragment_Base() {
         val jsonobject = JsonObject()
         val array = JsonArray()
         jsonobject.addProperty("PLANT", Data.instance._plant)
-        jsonobject.addProperty("WKCENTER", Data.instance._workCenter)
+
+        jsonobject.addProperty("WKCENTER", workCenters)
+
+
         array.add(jsonobject)
         val jsonData = gson.toJson(array)
         CoroutineScope(Dispatchers.Default).launch {
@@ -119,6 +144,7 @@ class dataSync : Fragment_Base() {
                     binding.textViewCkResult.text = msg
                 }.join()
             }, jsonData)
+            NetworkProgress.end()
         }.join()
     }
 
@@ -130,7 +156,7 @@ class dataSync : Fragment_Base() {
         var selectDeptNo = "'${Data.instance._plant}'"
 
         jsonobject.addProperty("PLANT", Data.instance._plant)
-        jsonobject.addProperty("WKCENTER", Data.instance._workCenter)
+        jsonobject.addProperty("WKCENTER", workCenters)
         jsonobject.addProperty("FRDATE", binding.dtpCkScheduleDateFrom.text.toString())
         jsonobject.addProperty("TODATE", binding.dtpCkScheduleDateTo.text.toString())
         array.add(jsonobject)
@@ -145,14 +171,14 @@ class dataSync : Fragment_Base() {
                     binding.textViewCkDaily.text = msg
                 }.join()
             }, jsonData)
+            NetworkProgress.end()
         }.join()
-
-        if(binding.dtpCkScheduleDateFrom.text.toString().equals(binding.dtpCkScheduleDateTo.text.toString())) {
+        if (binding.dtpCkScheduleDateFrom.text.toString().equals(binding.dtpCkScheduleDateTo.text.toString())) {
             QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()
-            Data.instance._downDate =  QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
-        }else{
-            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()+ " ~ " +binding.dtpCkScheduleDateTo.text.toString()
-            Data.instance._downDate =   QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
+            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
+        } else {
+            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString() + " ~ " + binding.dtpCkScheduleDateTo.text.toString()
+            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
         }
     }
 }

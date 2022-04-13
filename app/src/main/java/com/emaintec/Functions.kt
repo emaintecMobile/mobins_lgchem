@@ -397,17 +397,10 @@ object Functions {
         context: Context,
         Msg: String,
         Title: String?,
-        langKey: String? = null,
         listener_OK: DialogInterface.OnClickListener?
     ) {
         if (Msg.isNullOrBlank()) return
         var Msg = Msg
-        langKey?.run {
-            mapLang[langKey]?.let {
-                Msg = it.toString()
-            }
-        }
-        textToSpeech(Msg)
         AlertDialog.Builder(context)
             .setTitle(Title ?: "Info")
             .setMessage(Msg)

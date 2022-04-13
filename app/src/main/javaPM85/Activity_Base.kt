@@ -135,8 +135,7 @@ open class Activity_Base : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == IntentIntegrator.REQUEST_CODE) {
             val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             val re = scanResult!!.contents
-            val message = re
-            val viewPager = findViewById<View>(R.id.pager) as ViewPager
+            Log.d("barcode",  scanResult!!.contents)
             (Emaintec.fragment as Fragment_Base).onScanMsg(re)
             //            ((Fragment_Base)((Adapter_TabPager) viewPager.getAdapter()).getItem(viewPager.getCurrentItem())).onScanMsg(re);
         }

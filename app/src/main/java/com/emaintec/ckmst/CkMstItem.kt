@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emaintec.Fragment_Base
+import com.emaintec.ckdaily.CkDayItemChart
+import com.emaintec.ckdaily.model.PmDayCpModel
 import com.emaintec.ckmst.model.PmMstCpModel
 import com.emaintec.ckmst.model.PmMstrModel
 import com.emaintec.common.commonGridAdapter
@@ -78,7 +80,7 @@ class CkMstItem: Fragment_Base()  {
             }
 
             override fun onSingleTap(position: Int) {
-
+                    binding.textViewChkPos.text = adapterView.currentItem!!.CHK_POS
             }
             override fun onLongTap(position: Int): Boolean {
                 return true
@@ -177,8 +179,31 @@ class CkMstItem: Fragment_Base()  {
         binding.buttonInquery.setOneClickListener {
             updateList()
         }
+        binding.buttonHst.setOneClickListener {
+            showResultHst()
+        }
     }
-
+    private fun showResultHst(){
+        adapterView.currentItem?.let { item ->
+            CkDayItemChart().let {
+                it.item = Gson().fromJson( Gson().toJson(item).toString(),PmDayCpModel::class.java)
+                it.showNow(parentFragmentManager, "")
+                it.dialog?.setCanceledOnTouchOutside(false);
+                it.dialog?.window?.let { window ->
+                    val params = window.attributes
+                    params.width = ViewGroup.LayoutParams.MATCH_PARENT
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    window.attributes = params as android.view.WindowManager.LayoutParams
+                    window.setGravity(Gravity.TOP)
+                    window.setWindowAnimations(android.R.style.Animation_InputMethod)
+                }
+                it.dialog!!.setOnDismissListener {
+                    Emaintec.fragment = this
+                }
+                it.updateUI()
+            }
+        }
+    }
     override fun updateUI() {
         super.updateUI()
         binding.editTextSearch.setText(PM_TAG_NO)
