@@ -4,7 +4,7 @@
         <shape
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle" >
-            <solid android:color="@color/colorTitleBackgroud" />
+            <solid android:color="#253A4B" />
         </shape>
     </item>
     <item
@@ -12,7 +12,7 @@
         <shape
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle" >
-            <solid android:color="#F5F5F5" />
+            <solid android:color="#D8DFE3" />
         </shape>
     </item>
 

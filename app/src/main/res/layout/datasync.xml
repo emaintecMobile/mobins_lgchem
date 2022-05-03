@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="기간" />
+                        android:text="예정일" />
 
                     <com.emaintec.lib.ctrl.DatePickerTextView
                         android:id="@+id/dtp_CkScheduleDate_from"
@@ -60,11 +60,13 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="~" />
 
                     <com.emaintec.lib.ctrl.DatePickerTextView
+                        android:visibility="gone"
                         android:id="@+id/dtp_CkScheduleDate_to"
                         android:layout_width="120dp"
                         android:layout_height="40dp"
@@ -158,15 +160,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/modify_selector_list_item_02"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_Download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_button_save"
+
+                    android:background="@drawable/selector_button_appr"
                     android:text="다운로드"
                     android:textColor="@color/btnApprTxt" />
 
@@ -174,9 +178,9 @@
                     android:id="@+id/button_Upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_button_save"
+                    android:background="@drawable/selector_button_appr"
                     android:text="업로드"
                     android:textColor="@color/btnApprTxt" />
             </LinearLayout>

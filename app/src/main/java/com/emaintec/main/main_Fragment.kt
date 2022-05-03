@@ -12,6 +12,7 @@ import com.emaintec.Data
 import com.emaintec.Functions
 import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.db.SQLiteQueryUtil
+import com.emaintec.lib.device.Device
 import com.emaintec.lib.util.setOneClickListener
 import com.emaintec.mobins.databinding.MainFragmentBinding
 import com.google.gson.Gson
@@ -79,6 +80,7 @@ class main_Fragment : com.emaintec.Fragment_Base() {
         binding.textViewLoginMsg.text =
             "${Data.instance._workCenterNm} 작업장으로 로그인 했습니다."
         binding.textDnDate.text = "작업현황 다운로드 일자: ${Data.instance._downDate}"
+        binding.textViewVersion.text = "Mobile Version " + Device.versionName
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
                 SELECT (SELECT count(*) from TB_PM_MASTER ) MASTER_CNT

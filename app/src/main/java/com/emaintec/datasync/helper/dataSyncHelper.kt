@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.emaintec.Data
 import com.emaintec.Define
 import com.emaintec.ckdaily.model.PmDayMstModel
+import com.emaintec.ckdaily.model.PmHistoryModel
 import com.emaintec.datasync.model.UpDayCpModel
 import com.emaintec.lib.db.DBSwitcher
 import com.emaintec.lib.db.SQLiteQueryUtil
@@ -12,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import java.util.ArrayList
 
 
 object dataSyncHelper {
@@ -28,7 +30,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_wkcenter_code.IGetDataEx"
+                    action = "ct_biz.dn_wkcenter_code.IGetData"
                 ), ReceiverJson()
             ).get(onSuccessed = {
                 val nCount =
@@ -58,9 +60,9 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_pm_master.IGetDataEx",
+                    action = "ct_biz.dn_pm_master_sql.IGetData",
                     jsondata = jsondata,
-                    timeout =  300
+                    timeout =  600
                 ), ReceiverJson()
             ).get(onSuccessed = {
                 val nCount = SQLiteQueryUtil.insert_Table(it.receiver.resultData!!,"TB_PM_MSTCP",true)
@@ -83,7 +85,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_pm_daily.IGetDataEx",
+                    action = "ct_biz.dn_pm_daily.IGetData",
                     jsondata = jsondata
                 ), ReceiverJson()
             ).get(onSuccessed = {
@@ -102,30 +104,33 @@ object dataSyncHelper {
 
         @WorkerThread
         suspend fun GetCkSchHstList(
-            action: suspend (Boolean, String) -> Unit,
+            action: suspend (Boolean, List<PmHistoryModel>?, String) -> Unit,
             jsondata: String? = null,
             result: String? = null
         ) {
             NetworkSync(
                 TransmitterJson(
-                    url = Data.instance.url + "/Mobile",
-                    action = "ct_off.GetCkSchHstList.IGetData",
+                    url = Data.instance.url + "/ct_broker.jsp",
+                    action = "ct_biz.dn_ckday_hst.IGetData",
                     jsondata = jsondata
-
                 ), ReceiverJson()
             ).get(onSuccessed = {
-                val nCount = SQLiteQueryUtil.insert_Table(
-                    it.receiver.resultData!!,
-                    "TM_CHECK_HISTORY",
-                    true
-                )
-                action(
-                    true,
-                    "점검이력  ${nCount}/${it.receiver.resultData!!.getJSONArray("data").length()} 건 성공"
-                )
+                val list = ArrayList<PmHistoryModel>()
+                val jsonObject = it.receiver.resultData!!
+                if (!jsonObject.getBoolean("success")) {
+                    action(false, null, jsonObject.get("message").toString())
+                    return@get
+                }
+                val jsonArray = jsonObject.getJSONArray("data")
+
+                for (n in 0 until jsonArray.length()) {
+                    val `object` = jsonArray.getJSONObject(n)
+                    list.add(PmHistoryModel(`object`))
+                }
+                action(true, list, jsonObject.get("message").toString())
             }, onFailed = {
                 val jsonObject = JSONObject(it.receiver.errorData!!)
-                action(false, jsonObject.get("message").toString())
+                action(false, null, jsonObject.get("message").toString())
             })
         }
         @WorkerThread
@@ -137,10 +142,14 @@ object dataSyncHelper {
                  WHERE PM_CHECK = 'Y' 
             """.trimIndent())
             val list = Gson().fromJson(result.toString(), Array<UpDayCpModel>::class.java)
+            if(list.isEmpty()){
+                action(false, "데이타가 없습니다.")
+                return false
+            }
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.up_result.IGetDataEx",
+                    action = "ct_biz.up_result.IGetData",
                     jsondata = "[]",
                     result = result.toString()
                 ), ReceiverJson()

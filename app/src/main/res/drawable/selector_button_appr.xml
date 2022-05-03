@@ -3,19 +3,25 @@
 
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="@color/btnApprBackgroud"/>
+            <solid android:color="@color/colorLGMain"/>
+            <corners
+                android:radius="8dp"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape>
             <solid android:color="@color/btnDisableBackgroud"/>
+            <corners
+                android:radius="8dp"/>
         </shape>
     </item>
 
     <item>
         <shape >
-            <solid android:color="@color/btnApprBackgroud"/>
+            <solid android:color="@color/colorLGMain"/>
+            <corners
+                android:radius="8dp"/>
         </shape>
     </item>
 

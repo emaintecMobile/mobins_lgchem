@@ -61,6 +61,11 @@ class AdapterMutiSpinner(context: Context, resource: Int, objects: ArrayList<Mod
                 listState.filter { it.selected }.forEach {
                     items += it.NAME + ","
                 }
+                if(items.isBlank()){
+                    listState[0].NAME = items
+                    notifyDataSetChanged()
+                    return@setOnCheckedChangeListener
+                }
                 items = items.substring(0,items.length-1)
                 if(!listState[0].NAME.equals(items)) {
                     listState[0].NAME = items

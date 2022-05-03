@@ -3,19 +3,22 @@
 
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="#782e2e"/>
+            <solid android:color="#A50034"/>
+            <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape>
             <solid android:color="#eef0f1"/>
+            <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp"/>
         </shape>
     </item>
 
     <item>
-        <shape>
-            <solid android:color="#f15c5c"/>
+        <shape >
+            <solid android:color="#A50034"/>
+            <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp"/>
         </shape>
     </item>
 

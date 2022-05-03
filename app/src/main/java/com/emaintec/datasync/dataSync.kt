@@ -71,8 +71,8 @@ class dataSync : Fragment_Base() {
 
     private fun initButton() {
         binding.customLayoutTitle.imageButton.setOneClickListener {
-//            dismiss() 는 Activice_Main.kt 에 it.dialog!!.setOnDismissListener 리스너를 통하지 않고 닫는다.. 그래서 dialog.dismiss()를 사용한다.
             dialog!!.dismiss()
+            dismiss()
         }
         binding.buttonDownload.setOneClickListener {
             if (binding.switchCkDaily.isChecked) {
@@ -82,6 +82,8 @@ class dataSync : Fragment_Base() {
                         DialogInterface.OnClickListener { dialog, which ->
                             download()
                         })
+                }else{
+                    download()
                 }
             } else {
                 download()
@@ -158,7 +160,7 @@ class dataSync : Fragment_Base() {
         jsonobject.addProperty("PLANT", Data.instance._plant)
         jsonobject.addProperty("WKCENTER", workCenters)
         jsonobject.addProperty("FRDATE", binding.dtpCkScheduleDateFrom.text.toString())
-        jsonobject.addProperty("TODATE", binding.dtpCkScheduleDateTo.text.toString())
+        jsonobject.addProperty("TODATE", binding.dtpCkScheduleDateFrom.text.toString())
         array.add(jsonobject)
         val jsonData = gson.toJson(array)
 
@@ -173,13 +175,16 @@ class dataSync : Fragment_Base() {
             }, jsonData)
             NetworkProgress.end()
         }.join()
-        if (binding.dtpCkScheduleDateFrom.text.toString().equals(binding.dtpCkScheduleDateTo.text.toString())) {
-            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()
-            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
-        } else {
-            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString() + " ~ " + binding.dtpCkScheduleDateTo.text.toString()
-            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
-        }
+//        if (binding.dtpCkScheduleDateFrom.text.toString().equals(binding.dtpCkScheduleDateTo.text.toString())) {
+//            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()
+//            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
+//        } else {
+//            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString() + " ~ " + binding.dtpCkScheduleDateTo.text.toString()
+//            Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
+//        }
+        QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()
+        Data.instance._downDate = QueryHelper_Setup.instance.mapSetting["DOWN_DATE"].toString()
+        QueryHelper_Setup.instance.querySettingSave()
     }
 }
 

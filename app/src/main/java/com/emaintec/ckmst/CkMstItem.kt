@@ -56,13 +56,13 @@ class CkMstItem: Fragment_Base()  {
             gridModel("단위", 60, "CHK_UNIT"),
             gridModel("MIN", 70, "CHK_MIN"),
             gridModel("STD", 70, "CHK_DEST"),
-            gridModel("MAX", 70, "CHK_MAX"),
-            gridModel("입력일", 100, "CHK_LDATE1"),
-            gridModel("결과", 100, "CHK_LRSLT1"),
-            gridModel("상태", 100, "CHK_OKNOK1"),
-            gridModel("입력일", 100, "CHK_LDATE2"),
-            gridModel("결과", 100, "CHK_LRSLT2"),
-            gridModel("상태", 100, "CHK_OKNOK2")
+            gridModel("MAX", 70, "CHK_MAX")
+//            gridModel("입력일", 100, "CHK_LDATE1"),
+//            gridModel("결과", 100, "CHK_LRSLT1"),
+//            gridModel("상태", 100, "CHK_OKNOK1"),
+//            gridModel("입력일", 100, "CHK_LDATE2"),
+//            gridModel("결과", 100, "CHK_LRSLT2"),
+//            gridModel("상태", 100, "CHK_OKNOK2")
 
         )
 
@@ -175,7 +175,10 @@ class CkMstItem: Fragment_Base()  {
     }
 
     private fun initButton() {
-
+        binding.customLayoutTitle.imageButton.setOneClickListener {
+            dialog?.dismiss()
+            this.dismiss()
+        }
         binding.buttonInquery.setOneClickListener {
             updateList()
         }

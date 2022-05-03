@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@drawable/login_bg"
                                              android:focusable="true"
                                              android:focusableInTouchMode="true"
+    android:orientation="vertical"
                                              tools:context=".Activity_Login">
 
 
@@ -18,20 +18,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             tools:ignore="MissingConstraints">
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            app:srcCompat="@mipmap/login_logols"-->
-<!--        />-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
+            android:layout_gravity="center_vertical"
             android:text="LG화학 나주공장"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="14dp" />
         <ImageButton
@@ -43,73 +36,22 @@
                 android:background="@android:color/transparent"
                 app:srcCompat="@mipmap/button_menu" tools:ignore="RtlCompat"/>
     </androidx.appcompat.widget.Toolbar>
-    <!--<FrameLayout
-        android:id="@+id/layout_Top"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@drawable/login_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".Activity_Login">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/login_logo"/>
-        <ImageButton
-            android:id="@+id/imageButton_Data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="right|center_vertical"
-            android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/button_menu"/>
-    </FrameLayout>-->
-    <!--android:textColor="@android:color/white"-->
-    <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="28dp"
-            android:gravity="center"
-            android:text="Login"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="32sp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+<View
+    android:layout_width="wrap_content"
+    android:layout_height="280dp"/>
 
-
-
-
-    <TextView
-            android:id="@+id/textView_Version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="version"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-    <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="20dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <!--android:background="@color/colorTableSeparator"-->
         <LinearLayout
@@ -124,64 +66,65 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp"
                     android:gravity="start|center_vertical"
                     android:text="기본작업장"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    android:textSize="15sp" android:layout_marginLeft="16dp"/>
+                    android:textSize="15sp"/>
 
                 <Spinner
                     android:id="@+id/spinnerWorkCenter"
                     style="@style/CustomSpinner_Large"
-                    android:textSize="15sp"
-                    android:layout_margin="0dp"
-                    android:textColor="@android:color/white"/>
+                    android:background="@drawable/selector_spinner_white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/white"/>
-            <!--<EditText-->
-            <!--android:id="@+id/editText_ID"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1" />-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/editText_PW"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:ems="10"-->
-            <!--android:inputType="textPassword" />-->
 
             <Button
                     android:id="@+id/button_Login"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/colorLGMain"
+                    android:layout_height="45dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/selector_button_red"
                     android:text="로그인"
                     android:textAllCaps="false"
-                     android:textStyle="bold"
+                    android:textSize="18sp"
                     android:textColor="@drawable/selector_button_text_white"/>
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_BasicDown"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor = "@color/textSearch"
+                app:strokeColor="#D8DFE3"
+                app:strokeWidth="1dp"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
                 android:text="기본코드 다운로드"
                 android:textAllCaps="false"
                 android:textColor="@color/textSearch" />
 
         </LinearLayout>
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+<View
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/textView_Version"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="Mobile version 1.0"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    </LinearLayout>
+</LinearLayout>

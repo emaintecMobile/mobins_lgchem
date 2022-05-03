@@ -13,6 +13,7 @@ import com.emaintec.Fragment_Base
 import com.emaintec.ckdaily.model.PmDayCpModel
 import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.ctrl.EditTextDialog
+import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.util.setOneClickListener
 import com.emaintec.mobins.databinding.CkResultDtlInputBinding
 
@@ -83,11 +84,13 @@ class CkDayItemInput : Fragment_Base() {
 //            adapterView.currentItem?.STATUS = "U"
             adapterView.currentItem?.CHK_OKNOK = "OK"
             adapterView.notifyItemChanged(adapterView.selection)
+            SQLiteQueryUtil.update_table_Model(adapterView.currentItem as Object,"TB_PM_DAYCP", arrayOf("CHK_NO","PM_NOTI_NO","PM_EQP_NO","PM_PLAN"))
         }
         binding.buttonStatusX.setOnClickListener {
 //            adapterView.currentItem?.STATUS = "U"
             adapterView.currentItem?.CHK_OKNOK = "NOK"
             adapterView.notifyItemChanged(adapterView.selection)
+            SQLiteQueryUtil.update_table_Model(adapterView.currentItem as Object,"TB_PM_DAYCP", arrayOf("CHK_NO","PM_NOTI_NO","PM_EQP_NO","PM_PLAN"))
         }
         binding.textEditRemark.setOnDialogListener(object : EditTextDialog.OnDialogListener {
             override fun afterTextChanged(editTextDialog: EditTextDialog) {
@@ -158,11 +161,11 @@ class CkDayItemInput : Fragment_Base() {
         var min = modelCkDtl!!.CHK_MIN
         if (max.isNullOrBlank() && std.isNullOrBlank() && min.isNullOrBlank()) return
 
-        if (max.isNotEmpty() && std.isNotEmpty() && min.isNotEmpty()) min = std
+        if (max.isNotEmpty() && std.isNotEmpty() && min.isNullOrBlank()) min = std
 
         if (max.isNullOrBlank() && std.isNotEmpty() && min.isNotEmpty()) max = std
 
-        if (max.isNullOrBlank() && std.isNotEmpty()  && min.isNotEmpty() ) {
+        if (max.isNullOrBlank() && std.isNotEmpty()  && min.isNullOrBlank() ) {
             max = std
             min = std
         }

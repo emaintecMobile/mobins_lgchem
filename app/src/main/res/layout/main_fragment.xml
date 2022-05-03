@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f8fa"
+    android:background="#D8DFE3"
     android:orientation="vertical"
     tools:context="com.emaintec.main.main_Fragment">
 
@@ -224,6 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:gravity="center_vertical"
                     android:singleLine="false"
                     android:text="점검설비관리"
@@ -273,7 +274,7 @@
                     android:gravity="center_vertical"
                     android:singleLine="false"
                     android:text="일상점검관리"
-
+                    android:textColor="#ffffff"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -321,7 +322,7 @@
                     android:gravity="center_vertical"
                     android:singleLine="false"
                     android:text="이상설비조회"
-
+                    android:textColor="#ffffff"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -368,7 +369,7 @@
                         android:layout_marginLeft="30dp"
                         android:singleLine="false"
                         android:text="자료주고받기"
-
+                        android:textColor="#ffffff"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -403,11 +404,8 @@
             android:id="@+id/textView_Version"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical|end"
-            android:text="version 1.0"
+            android:gravity="center"
+            android:text="Mobile version 1.0"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#333333</color>
-    <color name="colorPrimaryDark">#333333</color>
-    <color name="colorAccent">#E6C00000</color>
+    <color name="colorPrimary">#253A4B</color>
+    <color name="colorPrimaryDark">#253A4B</color>
+    <color name="colorAccent">#A50034</color>
 
     <color name="colorMain">#FF9934</color>
-    <color name="colorLGMain">#E6C00000</color>
+    <color name="colorLGMain">#A50034</color>
+    <color name="colorLGGridLine">#BF043F</color>
 <!--      <color name="colorMain">#0072BC</color>-->
-    <color name="colorBackgroud">#EFEDEE</color>
-    <color name="colorTitleBackgroud">#333333</color>
-    <color name="colorLoginBackgroud">#333333</color>
-    <color name="colorSearchBackgroud">#333333</color>
+    <color name="colorBackgroud">#D8DFE3</color>
+    <color name="colorTitleBackgroud">#253A4B</color>
+    <color name="colorLoginBackgroud">#253A4B</color>
+    <color name="colorSearchBackgroud">#253A4B</color>
     <color name="colorListHeaderBg">#CCCCCC</color>
+    <color name="colorGridHeaderBg">#EDF1F4</color>
+    <color name="colorGridText">#253A4B</color>
+    <color name="colorGridTextCheck">#3F51B5</color>
+    <color name="colorGridTextStrange">#FF5722</color>
 
 <!--button-->
-    <color name="btnSaveBackgroud">#E6C00000</color>
+    <color name="btnSaveBackgroud">#A50034</color>
     <color name="btnDisableBackgroud">#A5A5A5</color>
     <color name="btnTextSave">#FF9934</color>
     <color name="btnTextFlash">#f7f8fa</color>

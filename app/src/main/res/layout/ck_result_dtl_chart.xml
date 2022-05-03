@@ -111,7 +111,10 @@
             android:id="@+id/button_Close"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/selector_button_appr"
             android:layout_weight="1"
+            android:textColor="@color/btnApprTxt"
             android:text="닫기" />
     </LinearLayout>
 

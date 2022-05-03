@@ -15,9 +15,11 @@ import com.emaintec.ckdaily.model.PmDayCpModel
 import com.emaintec.ckdaily.model.PmHistoryModel
 import com.emaintec.common.commonGridAdapter
 import com.emaintec.common.model.gridModel
+import com.emaintec.datasync.helper.dataSyncHelper
 import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.device.Device
+import com.emaintec.lib.network.NetworkProgress
 import com.emaintec.lib.version.Html
 import com.emaintec.mobins.databinding.CkResultDtlChartBinding
 import com.github.mikephil.charting.components.LimitLine
@@ -30,6 +32,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class CkDayItemChart : Fragment_Base() {
@@ -56,7 +61,6 @@ class CkDayItemChart : Fragment_Base() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initButton()
         initListView()
     }
@@ -159,51 +163,42 @@ class CkDayItemChart : Fragment_Base() {
         val gsonObj = Gson()
         val jsonobj = JsonObject()
         val array = JsonArray()
+        jsonobj.addProperty("PM_EQP_NO", item!!.PM_EQP_NO)
         jsonobj.addProperty("CHECK_DETAIL_NO", item!!.CHK_NO)
         array.add(jsonobj)
 
         val jsonData = gsonObj.toJson(array)
-//        NetworkProgress.start(activity!!)
-//        CoroutineScope(Dispatchers.Default).launch {
-//            ckResultHelper.instance.getCkResultHstList({ success, list, msg ->
-//                if (success) {
-//                    launch(Dispatchers.Main) {
-//                        adapterView.clear()
-//                        for (item in list!!) {
-//                            adapterView.addItem(item)
-//                        }
-//                        adapterView.front()
-//                    }.join()
-//                    launch(Dispatchers.Main) {
-//                        updateUI()
-//                    }.join()
-//                } else {
-//                    launch(Dispatchers.Main) {
-//                        Functions.MessageBox(activity!!, msg)
-//                    }
-//                }
-//            }, jsonData)
-//            NetworkProgress.end()
-//        }
-
-      val map =   SQLiteQueryUtil.selectMap(""" SELECT  CHK_LDATE1 , CHK_LDATE2, CHK_OKNOK1 , CHK_OKNOK2, CHK_LRSLT1 , CHK_LRSLT2 FROM TB_PM_MSTCP 
-            |WHERE PM_EQP_NO = '${item!!.PM_EQP_NO}' AND CHK_NO = '${item!!.CHK_NO}'""".trimMargin())
-
-
-
-        adapterView.addItem(PmHistoryModel(map["CHK_LDATE1"], map["CHK_OKNOK1"], map["CHK_LRSLT1"]));
-        adapterView.addItem(PmHistoryModel(map["CHK_LDATE2"], map["CHK_OKNOK2"], map["CHK_LRSLT2"]));
-//        adapterView.addItem(PmHistoryModel("19-04-27", "O(양호)", "42"));
-//        adapterView.addItem(PmHistoryModel("19-04-30", "O(양호)", "56"));
-//        adapterView.addItem(PmHistoryModel("19-05-06", "O(양호)", "30"));
-//        adapterView.addItem(PmHistoryModel("19-05-13", "O(양호)", "37"));
-//        adapterView.addItem(PmHistoryModel("19-05-20", "O(양호)", "70"));
-//        adapterView.addItem(PmHistoryModel("19-05-27", "O(양호)", "60"));
-//        adapterView.addItem(PmHistoryModel("19-06-03", "O(양호)", "55"));
-//        adapterView.addItem(PmHistoryModel("19-06-11", "O(양호)", "40"));
-//        adapterView.addItem(PmHistoryModel("19-06-18", "O(양호)", "67"));
-
-
+        NetworkProgress.start(activity!!)
+        CoroutineScope(Dispatchers.Default).launch {
+            dataSyncHelper.Check.GetCkSchHstList({ success, list, msg ->
+                if (success) {
+                    launch(Dispatchers.Main) {
+                        adapterView.clear()
+                        for (item in list!!) {
+                            adapterView.addItem(item)
+                        }
+                        adapterView.front()
+                    }.join()
+                    launch(Dispatchers.Main) {
+                        updateChart()
+                    }.join()
+                } else {
+                    launch(Dispatchers.Main) {
+                        adapterView.clear()
+                        val map =   SQLiteQueryUtil.selectMap(""" SELECT  CHK_LDATE1 , CHK_LDATE2, CHK_OKNOK1 , CHK_OKNOK2, CHK_LRSLT1 , CHK_LRSLT2 FROM TB_PM_MSTCP
+                                 |WHERE PM_EQP_NO = '${item!!.PM_EQP_NO}' AND CHK_NO = '${item!!.CHK_NO}'""".trimMargin())
+                        adapterView.addItem(PmHistoryModel(map["CHK_LDATE1"], map["CHK_OKNOK1"], map["CHK_LRSLT1"]));
+                        adapterView.addItem(PmHistoryModel(map["CHK_LDATE2"], map["CHK_OKNOK2"], map["CHK_LRSLT2"]));
+                    }.join()
+                    launch(Dispatchers.Main) {
+                        updateChart()
+                    }.join()
+                }
+            }, jsonData)
+            NetworkProgress.end()
+        }
+    }
+    fun updateChart() {
         binding.textView01.text = item!!.CHK_POS
         binding.textView02.text = item!!.CHK_DESC
         if (item!!.CHK_CHAR.isNullOrBlank()) {

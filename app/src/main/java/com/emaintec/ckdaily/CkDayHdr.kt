@@ -10,6 +10,7 @@ import com.emaintec.Data
 import com.emaintec.Fragment_Base
 import com.emaintec.Functions
 import com.emaintec.ckdaily.model.PmDayMstModel
+import com.emaintec.ckmst.CkMstHdrAdapter
 import com.emaintec.ckmst.model.PmMstrModel
 import com.emaintec.common.commonViewAdapter
 import com.emaintec.common.model.gridViewModel
@@ -26,8 +27,8 @@ import org.json.JSONObject
 
 class CkDayHdr: Fragment_Base()  {
     lateinit var binding : CkDayHdrBinding
-    var adapterView = commonViewAdapter<PmDayMstModel>()
-        .apply { this.ClassItem = PmDayMstModel::class.java }
+//    var adapterView = commonViewAdapter<PmDayMstModel>()
+//        .apply { this.ClassItem = PmDayMstModel::class.java }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = CkDayHdrBinding.inflate(inflater,container,false)
         return binding.root//inflater.inflate(R.layout.ck_result_hdr, container, false)
@@ -36,7 +37,7 @@ class CkDayHdr: Fragment_Base()  {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initViewList()
+        initList()
         initButton()
         initRadioButton()
         updateUI()
@@ -52,44 +53,85 @@ class CkDayHdr: Fragment_Base()  {
         super.onStart()
 
     }
-    private fun initViewList() {
+//    private fun initViewList() {
+//        val recyclerView = binding.listView
+//        adapterView.gridSetting = arrayListOf(
+//            gridViewModel("TAG No", "PM_TAG_NO").also { it.IS_EXPAND = false },
+//            gridViewModel("예정일", "PM_PLN_DT").also { it.IS_EXPAND = false },
+//            gridViewModel("설비명", "PM_EQP_NM").also { it.IS_EXPAND = false }
+//        )
+//
+//        val mLayoutManager: LinearLayoutManager
+//        mLayoutManager = LinearLayoutManager(activity)
+//        mLayoutManager.setInitialPrefetchItemCount(50)
+//        recyclerView.setLayoutManager(mLayoutManager)
+//        recyclerView.setItemViewCacheSize(50);
+//
+//        adapterView.setOnItemTapListener(object :
+//            RecyclerViewAdapter.OnItemTapListener {
+//            override fun onDoubleTap(position: Int) {
+//                showckResultDtl()
+//            }
+//            override fun onSingleTap(position: Int) {
+//            }
+//            override fun onLongTap(position: Int): Boolean {
+//                return true
+//            }
+//        })
+//        adapterView.listView = recyclerView
+//
+//    }
+    private fun initList() {
+//        val recyclerView = requireView().findViewById<View>(R.id.listView) as RecyclerView
         val recyclerView = binding.listView
-        adapterView.gridSetting = arrayListOf(
-            gridViewModel("TAG No", "PM_TAG_NO").also { it.IS_EXPAND = false },
-            gridViewModel("예정일", "PM_PLN_DT").also { it.IS_EXPAND = false },
-            gridViewModel("설비명", "PM_EQP_NM").also { it.IS_EXPAND = false }
-        )
+        // vertical RecyclerView
+        // keep movie_list_row.xml width to `match_parent`
+        //        val mLayoutManager: RecyclerView.LayoutManager =
+        //            LinearLayoutManager(Emaintec.application)
 
         val mLayoutManager: LinearLayoutManager
         mLayoutManager = LinearLayoutManager(activity)
-        mLayoutManager.setInitialPrefetchItemCount(50)
         recyclerView.setLayoutManager(mLayoutManager)
-        recyclerView.setItemViewCacheSize(50);
 
-        adapterView.setOnItemTapListener(object :
-            RecyclerViewAdapter.OnItemTapListener {
+        // horizontal RecyclerView
+        // keep movie_list_row.xml width to `wrap_content`
+        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        // horizontal RecyclerView
+        // keep movie_list_row.xml width to `wrap_content`
+        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(mLayoutManager)
+
+
+
+        CkDayHdrAdapter.instance.setOnItemTapListener(object : RecyclerViewAdapter.OnItemTapListener {
             override fun onDoubleTap(position: Int) {
                 showckResultDtl()
             }
+
             override fun onSingleTap(position: Int) {
+
             }
+
             override fun onLongTap(position: Int): Boolean {
                 return true
+
             }
         })
-        adapterView.listView = recyclerView
+    CkDayHdrAdapter.instance.listView = recyclerView
 
     }
-
     private fun updateList(strQrCode: String ="") {
         NetworkProgress.start(requireContext())
-        adapterView.clear()
+        CkDayHdrAdapter.instance.clear()
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
             select * from TB_PM_DAYMST where 1=1
             ${
                 if(binding.editTextSearch.text.toString().isNotBlank()) {
-                    "and PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%'"
+                    "and (PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%' " +
+                            "or PM_EQP_NO like '%${binding.editTextSearch.text.toString()}%' " +
+                            "or PM_EQP_NM like '%${binding.editTextSearch.text.toString()}%')"
                 }else{""}
             }
             ${
@@ -109,11 +151,11 @@ class CkDayHdr: Fragment_Base()  {
         )
         val list = Gson().fromJson(jArr.toString(), Array<PmDayMstModel>::class.java)
         for (item in list!!) {
-            adapterView.addItem(item)
+            CkDayHdrAdapter.instance.addItem(item)
         }
         NetworkProgress.end()
         if(list.isNotEmpty()) {
-            adapterView.selection = 0
+            CkDayHdrAdapter.instance.selection = 0
         }else{
             if(strQrCode.isNotBlank()) {
                 Functions.MessageBox(requireContext(), "없는 설비번호 입니다.")
@@ -163,13 +205,13 @@ class CkDayHdr: Fragment_Base()  {
             updateList()
         }
         binding.buttonCheckPoint.setOneClickListener {
-            adapterView.currentItem?.let { item ->
+            CkDayHdrAdapter.instance.currentItem?.let { item ->
                 showckResultDtl()
             }
         }
     }
     private fun showckResultDtl() {
-        adapterView.currentItem?.let { item->
+        CkDayHdrAdapter.instance.currentItem?.let { item->
             CkDayItem().let {
                 it.setStyle(STYLE_NORMAL, R.style.FullDialogTheme) // 전체 화면
                 it.PM_EQP_NO = item.PM_EQP_NO

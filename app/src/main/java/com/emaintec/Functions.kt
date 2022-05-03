@@ -655,7 +655,6 @@ object Functions {
                     getNewVersion({ success: Boolean, msg: String ->
                         launch(Dispatchers.Main) {
                             if (success&&msg.isNotBlank()) {
-
                                 MessageBoxOk(
                                     Emaintec.activity!!,
                                     "새로운 버젼이 있습니다. 확인을 클릭하여 업데이트 하세요.",
@@ -733,10 +732,9 @@ object Functions {
         ) {
             NetworkSync(
                 TransmitterJson(
-                    url = Data.instance.url ,
-                    action = "DeployApp.IGetUpdatedInfo",
+                    url = Data.instance.url + "/ct_broker.jsp",
+                    action = "ct_biz.DeployApp.IGetUpdatedInfo",
                     jsondata = jsondata
-
                 ), ReceiverJson()
             ).get(onSuccessed = {
                 var jsonObject = it.receiver.resultData!!

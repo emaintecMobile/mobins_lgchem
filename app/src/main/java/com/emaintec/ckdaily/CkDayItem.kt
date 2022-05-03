@@ -121,6 +121,7 @@ class CkDayItem : Fragment_Base() {
 //                        adapterView.getItem(position).STATUS = "U"
                         adapterView.getItem(position).CHK_OKNOK = CHECK_STATUS
                         adapterView.notifyItemChanged(position)
+                        SQLiteQueryUtil.update_table_Model(adapterView.currentItem as Object,"TB_PM_DAYCP", arrayOf("CHK_NO","PM_NOTI_NO","PM_EQP_NO","PM_PLAN"))
                     }
                 }
 //                if (columnName.equals("CHK_MEMO")) {
@@ -240,7 +241,7 @@ class CkDayItem : Fragment_Base() {
                     "AND A.PM_EQP_NO  = '$PM_EQP_NO'"
                 }
             }
-            order by A.PM_NOTI_NO,A.CHK_SEQ,A.CHK_NO
+            order by A.PM_NOTI_NO,A.CHK_NO
         """.trimIndent()
         )
         val list = Gson().fromJson(jArr.toString(), Array<PmDayCpModel>::class.java)
@@ -333,7 +334,7 @@ class CkDayItem : Fragment_Base() {
     }
 
     private fun save() {
-        val date = Functions.DateUtil.getDate()
+        val date = Functions.DateUtil.getDate("yyyyMMdd")
         val time =  Functions.DateUtil.getDate("HHmmss")
         //해더정보 조회
         var itemHdr = getPmMstInfo()
@@ -348,6 +349,10 @@ class CkDayItem : Fragment_Base() {
             it.PM_CHECK = "Y"
             it.PM_STANDBY = standBy
             it.PM_STRANGE = stranger
+            if(it.CHK_DESC.contains(Data.instance.m_strChkDmyIden))
+            {
+                it.CHK_MEMO = binding.editTextSpecial.editTextDialog.text.toString()
+            }
             SQLiteQueryUtil.replace_table_Model(it as Object,"TB_PM_DAYCP",false)
         }
         Functions.MessageBox(requireContext(),"성공적으로 저장되었습니다")
@@ -413,6 +418,7 @@ class CkDayItem : Fragment_Base() {
                 })
                 it.dialog!!.setOnDismissListener {
                     Emaintec.fragment = this
+                    SQLiteQueryUtil.update_table_Model(adapterView.currentItem as Object,"TB_PM_DAYCP", arrayOf("CHK_NO","PM_NOTI_NO","PM_EQP_NO","PM_PLAN"))
                 }
                 it.updateUI()
             }

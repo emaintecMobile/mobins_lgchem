@@ -63,7 +63,7 @@ class Activity_Login : Activity_Base() {
         """.trimIndent()
         )
         val list = Gson().fromJson(jArr.toString(), Array<WorkCenterModel>::class.java)
-        val adapter = ArrayAdapter(this, R.layout.custom_spinner_item_left_white, list)
+        val adapter = ArrayAdapter(this, R.layout.custom_spinner_item_lg, list)
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
         binding.spinnerWorkCenter.adapter = adapter
         NetworkProgress.end()
@@ -80,7 +80,7 @@ class Activity_Login : Activity_Base() {
         //////////////////////////////////////////////////////////////////////////////////
         // 버전 표시
         //////////////////////////////////////////////////////////////////////////////////
-        binding.textViewVersion.text = "Version:" + Device.versionName
+        binding.textViewVersion.text = "Mobile Version:" + Device.versionName
     }
 
     private fun initButton() {

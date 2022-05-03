@@ -52,7 +52,7 @@ class Activity_Splash : AppCompatActivity() {
                         Data.instance.url = _mapSetting["URL"] ?: Define.URL_DEFAULT
                         Define.SOUND = "Y" == _mapSetting["SOUND"]
                         Data.instance._workCenter = _mapSetting["WORKCENTER"].toString()
-                        Data.instance._plant = _mapSetting["PLANT"].toString()
+                        Data.instance._plant = _mapSetting["PLANT"]?: Define.PLANT
                         Data.instance._downDate = _mapSetting["DOWN_DATE"].toString()
                         Functions
 

@@ -10,8 +10,10 @@
         <!--        <item name="actionMenuTextColor">@android:color/white</item>-->
         <!-- CHECK  edittext 밑줄-->
         <item name="colorAccent">@color/colorLGMain</item>
+
         <!-- 타이틀바  밑 기본 버튼 -->
         <item name="colorPrimary">@color/colorLGMain</item>
+
         <!-- 최상단 시계및 각종 정보 색깔 -->
         <item name="colorPrimaryDark">@color/colorTitleBackgroud</item>
     </style>
@@ -43,6 +45,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
     <style name="BtnDefault" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:background">@drawable/splash_background</item>
+    </style>
+    <!-- 조회버튼 스타일 -->
+    <style name="grid_text">
+        <item name="android:textColor">@color/colorGridText</item>
     </style>
     <!-- 조회버튼 스타일 -->
     <style name="button_Inquery">

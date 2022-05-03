@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:singleLine="true"
-                        android:hint="TAG NO 입력하세요"
+                        android:hint="검색어를 입력하세요"
                         android:textColorHint="@color/textSearchHit"
                         android:background="@android:color/transparent"
                         android:textColor="@color/textSearch" />
@@ -117,29 +117,25 @@
             android:dividerHeight="0dp"
             android:padding="2dp"
             tools:itemCount="2"
-            tools:listitem="@layout/ck_result_hdr_list" />
+            tools:listitem="@layout/ck_mst_hdr_list" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <LinearLayout
         android:id="@+id/layoutBottomButton"
+        android:background="@drawable/modify_selector_list_item_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_Scroll">
-        android:background="#a8a8a8"
+        app:layout_constraintTop_toBottomOf="@+id/layout_Scroll"
         android:orientation="horizontal">
-
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonCheckPoint"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_margin="1dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
             android:background="@drawable/selector_button_appr"
             android:textColor="@color/btnApprTxt"
             android:text="점 검"
