@@ -424,3 +424,4 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+/app/release/output-metadata.json
