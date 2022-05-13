@@ -264,6 +264,11 @@ class CkDayItem : Fragment_Base() {
             if(adapterView._arrayList[0].PM_STANDBY.equals("N")){
                 binding.radioStandByNo.isChecked = true
             }
+            if("Y".equals(adapterView._arrayList[0].PM_CHECK)){
+                binding.buttonSave.text ="다시 저장 (점검완료)"
+            }else{
+                binding.buttonSave.text ="저 장"
+            }
         }else{
             Functions.MessageBox(requireContext(),"없는 설비번호 입니다.")
         }
@@ -305,6 +310,7 @@ class CkDayItem : Fragment_Base() {
             if(adapterView._arrayList[0].PM_STANDBY.equals("N")){
                 binding.radioStandByNo.isChecked = true
             }
+
         }
         NetworkProgress.end()
     }
@@ -435,6 +441,7 @@ class CkDayItem : Fragment_Base() {
         }
         Data.instance._mode = ""
         Data.instance._modeData = ""
+
     }
 
     override fun onScanMsg(strQrCode: String) {

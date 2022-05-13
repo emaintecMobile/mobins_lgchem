@@ -46,6 +46,15 @@
                         android:background="@android:color/transparent"
                         android:textColor="@color/textSearch" />
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/textViewStatusCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="1/1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/btnApprTxt"
+                    />
                 <ImageButton
                     android:id="@+id/button_Inquery"
                     style="@style/button_Inquery"

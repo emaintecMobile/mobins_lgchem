@@ -19,6 +19,7 @@ import com.emaintec.lib.ctrl.recycleview.RecyclerViewAdapter
 import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.network.NetworkProgress
 import com.emaintec.lib.util.setOneClickListener
+import com.emaintec.main.main_Fragment
 import com.emaintec.mobins.R
 import com.emaintec.mobins.databinding.CkDayHdrBinding
 import com.emaintec.mobins.databinding.CkMstHdrBinding
@@ -122,6 +123,21 @@ class CkDayHdr: Fragment_Base()  {
 
     }
     private fun updateList(strQrCode: String ="") {
+        val jStatus = SQLiteQueryUtil.selectJsonArray(
+            """
+                   SELECT (SELECT count(*) from TB_PM_MASTER ) MASTER_CNT
+                       ,COUNT(*)	   AS DAY_CNT
+                       ,SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) AS CHECKED
+                       ,SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END) AS STRANGE
+                FROM TB_PM_DAYMST
+ 
+        """.trimIndent()
+        )
+        val list2 = Gson().fromJson(jStatus.toString(), Array<main_Fragment.StatusModel>::class.java)
+        if(list2.isNotEmpty()){
+            binding.radioCkY.text = "점검 ${list2[0].CHECKED} "
+            binding.radioCkN.text = "미점검 ${list2[0].DAY_CNT.toInt() - list2[0].CHECKED.toInt()}"
+        }
         NetworkProgress.start(requireContext())
         CkDayHdrAdapter.instance.clear()
         val jArr = SQLiteQueryUtil.selectJsonArray(
