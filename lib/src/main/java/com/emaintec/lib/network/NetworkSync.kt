@@ -44,7 +44,7 @@ class NetworkSync<T : TransmitterBase, R : ReceiverBase<*>> (val transmitter: T,
             }
 
             inputStream = httpURLConnection.inputStream
-            receiver.errorData = receiver.process(null, inputStream!!, httpURLConnection.contentLength)
+            receiver.errorData = receiver.process( inputStream!!, httpURLConnection.contentLength)
 
             getCookieHeader(httpURLConnection);
             if (receiver.errorData == null) {

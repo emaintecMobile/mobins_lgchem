@@ -38,6 +38,7 @@ import com.emaintec.lib.device.Device
 import com.emaintec.lib.network.*
 import com.emaintec.mobins.R
 import com.emaintec.mobins.Activity_Main
+import com.emaintec.mobins.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -637,7 +638,7 @@ object Functions {
     }
 
     object UpdateApp {
-        suspend fun Autoupdate(TYPE: String = "XML"): Boolean {
+         fun Autoupdate(TYPE: String = "XML"): Boolean {
             var bReturn = false
             val gson = Gson()
             val jsonobject = JsonObject()
@@ -683,7 +684,7 @@ object Functions {
                                                                 val instrallUri =
                                                                     FileProvider.getUriForFile(
                                                                         Emaintec.activity!!,
-                                                                        Emaintec.activity!!.packageName,
+                                                                        BuildConfig.APPLICATION_ID + ".fileprovider",
                                                                         File(msg)
                                                                     )
                                                                 val intent =
@@ -721,7 +722,7 @@ object Functions {
                             }
                         }.join()
                     }, jsonData)
-            }.join()
+            }
             return bReturn
         }
 

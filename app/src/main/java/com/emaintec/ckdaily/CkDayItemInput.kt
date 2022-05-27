@@ -116,7 +116,9 @@ class CkDayItemInput : Fragment_Base() {
                 window.setGravity(Gravity.TOP)
                 window.setWindowAnimations(android.R.style.Animation_InputMethod)
             }
-            it.dialog!!.setOnDismissListener {
+            it.dialog!!.setOnDismissListener { it2->
+                it.dialog!!.dismiss()
+                it.dismiss()
                 Emaintec.fragment = this
             }
             it.updateUI()

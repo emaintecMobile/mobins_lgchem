@@ -4,9 +4,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
 
-class ReceiverJson(listener: NetworkTask.OnProgressUpdateListener? = null) : ReceiverBase<JSONObject>(listener) {
+class ReceiverJson() : ReceiverBase<JSONObject>() {
 
-	override fun process(connectionTask: NetworkTask?, inputStream: InputStream, dataLength: Int): String? {
+	override fun process(inputStream: InputStream, dataLength: Int): String? {
 		var errMessage: String? = null
 		try {
 			val bufferedReader = BufferedReader(InputStreamReader(inputStream) as Reader?)

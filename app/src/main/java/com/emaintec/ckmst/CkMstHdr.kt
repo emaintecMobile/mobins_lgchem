@@ -196,7 +196,9 @@ private fun initList() {
                     window.setGravity(Gravity.TOP)
                     window.setWindowAnimations(android.R.style.Animation_Translucent) // 화면 표시 애니메이션
                 }
-                it.dialog!!.setOnDismissListener {
+                it.dialog!!.setOnDismissListener { it2->
+                    it.dialog!!.dismiss()
+                    it.dismiss()
                     Emaintec.fragment = this
                 }
                 it.updateUI()

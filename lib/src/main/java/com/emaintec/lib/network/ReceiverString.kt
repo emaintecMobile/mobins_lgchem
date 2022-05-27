@@ -2,9 +2,9 @@ package com.emaintec.lib.network
 
 import java.io.*
 
-class ReceiverString(listener: NetworkTask.OnProgressUpdateListener? = null) : ReceiverBase<String>(listener) {
+class ReceiverString() : ReceiverBase<String>() {
 
-	override fun process(connectionTask: NetworkTask?, inputStream: InputStream, dataLength: Int): String? {
+	override fun process(inputStream: InputStream, dataLength: Int): String? {
 		var errMessage: String? = null
 		try {
 			val bufferedReader = BufferedReader(InputStreamReader(inputStream) as Reader?)

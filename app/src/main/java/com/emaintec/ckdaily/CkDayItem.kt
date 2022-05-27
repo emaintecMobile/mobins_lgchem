@@ -422,7 +422,9 @@ class CkDayItem : Fragment_Base() {
                         }
                     }
                 })
-                it.dialog!!.setOnDismissListener {
+                it.dialog!!.setOnDismissListener { it2->
+                    it.dialog!!.dismiss()
+                    it.dismiss()
                     Emaintec.fragment = this
                     SQLiteQueryUtil.update_table_Model(adapterView.currentItem as Object,"TB_PM_DAYCP", arrayOf("CHK_NO","PM_NOTI_NO","PM_EQP_NO","PM_PLAN"))
                 }

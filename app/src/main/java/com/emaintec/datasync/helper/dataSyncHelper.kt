@@ -55,8 +55,7 @@ object dataSyncHelper {
             action: suspend (Boolean, String) -> Unit,
             jsondata: String? = null,
             result: String? = null
-        ): Boolean {
-            var bResult = true;
+        ) {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
@@ -71,9 +70,7 @@ object dataSyncHelper {
             }, onFailed = {
                 val jsonObject = JSONObject(it.receiver.errorData!!)
                 action(false, jsonObject.get("message").toString())
-                bResult = false;
             })
-            return bResult;
         }
 
         @WorkerThread

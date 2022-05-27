@@ -24,6 +24,7 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class dataSync : Fragment_Base() {
     lateinit var binding: DatasyncBinding
@@ -40,6 +41,7 @@ class dataSync : Fragment_Base() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        binding.dtpCkScheduleDateFrom.text = Functions.DateUtil.getDate("yyyy-MM-dd", -6)
+        Functions.UpdateApp.Autoupdate()
         initSpinner()
         initButton()
     }
@@ -117,8 +119,7 @@ class dataSync : Fragment_Base() {
         workCenters = "!"+workCenters
 
         NetworkProgress.start(activity!!)
-        CoroutineScope(Dispatchers.Default).launch {
-            if (Functions.UpdateApp.Autoupdate()) return@launch
+        CoroutineScope(Dispatchers.IO).launch{
             if (binding.switchCkMst.isChecked) downloadChMst()
             if (binding.switchCkDaily.isChecked) downloadCkDaily()
 
@@ -137,11 +138,11 @@ class dataSync : Fragment_Base() {
 
         array.add(jsonobject)
         val jsonData = gson.toJson(array)
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             launch(Dispatchers.Main) {
                 binding.textViewCkResult.text = "다운중"
             }.join()
-            val bResult = dataSyncHelper.Check.GetCkMst({ success: Boolean, msg: String ->
+            dataSyncHelper.Check.GetCkMst({ success: Boolean, msg: String ->
                 launch(Dispatchers.Main) {
                     binding.textViewCkResult.text = msg
                 }.join()
@@ -168,7 +169,7 @@ class dataSync : Fragment_Base() {
             launch(Dispatchers.Main) {
                 binding.textViewCkDaily.text = "다운중"
             }.join()
-            val bResult = dataSyncHelper.Check.GetCkDaily({ success: Boolean, msg: String ->
+           dataSyncHelper.Check.GetCkDaily({ success: Boolean, msg: String ->
                 launch(Dispatchers.Main) {
                     binding.textViewCkDaily.text = msg
                 }.join()
