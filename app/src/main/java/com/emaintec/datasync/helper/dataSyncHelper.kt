@@ -59,7 +59,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_pm_master_sql.IGetDataEx",
+                    action = "ct_biz.dn_pm_master_sql.IGetData",
                     jsondata = jsondata,
                     timeout =  600
                 ), ReceiverJson()
@@ -82,7 +82,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_pm_daily.IGetDataEx",
+                    action = "ct_biz.dn_pm_daily.IGetData",
                     jsondata = jsondata
                 ), ReceiverJson()
             ).get(onSuccessed = {
@@ -108,7 +108,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.dn_ckday_hst.IGetDataEx",
+                    action = "ct_biz.dn_ckday_hst.IGetData",
                     jsondata = jsondata
                 ), ReceiverJson()
             ).get(onSuccessed = {
@@ -146,7 +146,7 @@ object dataSyncHelper {
             NetworkSync(
                 TransmitterJson(
                     url = Data.instance.url + "/ct_broker.jsp",
-                    action = "ct_biz.up_result.IGetDataEx",
+                    action = "ct_biz.up_result.IGetData",
                     jsondata = "[]",
                     result = result.toString()
                 ), ReceiverJson()
