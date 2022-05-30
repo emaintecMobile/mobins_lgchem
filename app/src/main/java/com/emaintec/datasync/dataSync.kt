@@ -132,10 +132,7 @@ class dataSync : Fragment_Base() {
         val jsonobject = JsonObject()
         val array = JsonArray()
         jsonobject.addProperty("PLANT", Data.instance._plant)
-
         jsonobject.addProperty("WKCENTER", workCenters)
-
-
         array.add(jsonobject)
         val jsonData = gson.toJson(array)
         CoroutineScope(Dispatchers.IO).launch {
@@ -147,7 +144,6 @@ class dataSync : Fragment_Base() {
                     binding.textViewCkResult.text = msg
                 }.join()
             }, jsonData)
-            NetworkProgress.end()
         }.join()
     }
 
@@ -165,7 +161,7 @@ class dataSync : Fragment_Base() {
         array.add(jsonobject)
         val jsonData = gson.toJson(array)
 
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             launch(Dispatchers.Main) {
                 binding.textViewCkDaily.text = "다운중"
             }.join()
@@ -174,7 +170,6 @@ class dataSync : Fragment_Base() {
                     binding.textViewCkDaily.text = msg
                 }.join()
             }, jsonData)
-            NetworkProgress.end()
         }.join()
 //        if (binding.dtpCkScheduleDateFrom.text.toString().equals(binding.dtpCkScheduleDateTo.text.toString())) {
 //            QueryHelper_Setup.instance.mapSetting["DOWN_DATE"] = binding.dtpCkScheduleDateFrom.text.toString()
