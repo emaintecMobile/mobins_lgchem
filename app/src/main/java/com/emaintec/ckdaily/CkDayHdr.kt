@@ -127,8 +127,8 @@ class CkDayHdr: Fragment_Base()  {
             """
                    SELECT (SELECT count(*) from TB_PM_MASTER ) MASTER_CNT
                        ,COUNT(*)	   AS DAY_CNT
-                       ,SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) AS CHECKED
-                       ,SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END) AS STRANGE
+                       ,IFNULL(SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) , 0) AS CHECKED
+                       ,IFNULL(SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END), 0) AS STRANGE
                 FROM TB_PM_DAYMST
  
         """.trimIndent()
@@ -136,7 +136,7 @@ class CkDayHdr: Fragment_Base()  {
         val list2 = Gson().fromJson(jStatus.toString(), Array<main_Fragment.StatusModel>::class.java)
         if(list2.isNotEmpty()){
             binding.radioCkY.text = "점검 ${list2[0].CHECKED} "
-            binding.radioCkN.text = "미점검 ${list2[0].DAY_CNT.toInt() - list2[0].CHECKED.toInt()}"
+            binding.radioCkN.text = "미점검 ${list2[0].DAY_CNT.toInt() - list2[0].CHECKED.toInt()?:0}"
         }
         NetworkProgress.start(requireContext())
         CkDayHdrAdapter.instance.clear()

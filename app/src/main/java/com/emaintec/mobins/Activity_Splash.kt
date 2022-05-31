@@ -53,7 +53,7 @@ class Activity_Splash : AppCompatActivity() {
                         Define.SOUND = "Y" == _mapSetting["SOUND"]
                         Data.instance._workCenter = _mapSetting["WORKCENTER"].toString()
                         Data.instance._plant = _mapSetting["PLANT"]?: Define.PLANT
-                        Data.instance._downDate = _mapSetting["DOWN_DATE"].toString()
+                        Data.instance._downDate = _mapSetting["DOWN_DATE"]?:""
                         Functions
 
 

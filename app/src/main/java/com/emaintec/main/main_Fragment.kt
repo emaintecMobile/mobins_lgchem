@@ -72,6 +72,15 @@ class main_Fragment : com.emaintec.Fragment_Base() {
             intent.putExtra("title", "자료주고받기")
             startActivityForResult(intent, 1000)
         }
+        binding.layoutEqMst.setOneClickListener {
+            binding.btnCkMst.performClick()
+        }
+        binding.layoutDayCk.setOneClickListener {
+            binding.btnCkDaily.performClick()
+        }
+        binding.layoutStranger.setOneClickListener {
+            binding.btnCkFault.performClick()
+        }
     }
 
     override fun updateUI() {
@@ -79,14 +88,14 @@ class main_Fragment : com.emaintec.Fragment_Base() {
         if (view == null) return
         binding.textViewLoginMsg.text =
             "${Data.instance._workCenterNm} 작업장으로 로그인 했습니다."
-        binding.textDnDate.text = "작업현황 다운로드 일자: ${Data.instance._downDate}"
+        binding.textDnDate.text = "작업현황 다운로드 일자: ${Data.instance._downDate?:""}"
         binding.textViewVersion.text = "Mobile Version " + Device.versionName
         val jArr = SQLiteQueryUtil.selectJsonArray(
             """
                 SELECT (SELECT count(*) from TB_PM_MASTER ) MASTER_CNT
                        ,COUNT(*)	   AS DAY_CNT
-                       ,SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) AS CHECKED
-                       ,SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END) AS STRANGE
+                       ,IFNULL(SUM(CASE WHEN PM_CHECK = 'Y' THEN 1 ELSE 0 END) , 0) AS CHECKED
+                       ,IFNULL(SUM(CASE WHEN PM_STRANGE = 'Y' THEN 1 ELSE 0 END), 0) AS STRANGE
                 FROM TB_PM_DAYMST
  
         """.trimIndent()
