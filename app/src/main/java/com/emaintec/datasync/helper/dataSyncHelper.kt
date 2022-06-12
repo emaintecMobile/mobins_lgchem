@@ -148,7 +148,8 @@ object dataSyncHelper {
                     url = Data.instance.url + "/ct_broker.jsp",
                     action = "ct_biz.up_result.IGetData",
                     jsondata = "[]",
-                    result = result.toString()
+                    result = result.toString(),
+                    timeout = 300
                 ), ReceiverJson()
             ).get(
                 onSuccessed = {

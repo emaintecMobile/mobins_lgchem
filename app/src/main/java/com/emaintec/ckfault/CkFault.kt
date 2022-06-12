@@ -12,6 +12,7 @@ import com.emaintec.ckdaily.CkDayItem
 import com.emaintec.ckdaily.model.PmDayMstModel
 import com.emaintec.lib.base.Emaintec
 import com.emaintec.lib.ctrl.recycleview.RecyclerViewAdapter
+import com.emaintec.lib.db.ChoSearchQuery
 import com.emaintec.lib.db.SQLiteQueryUtil
 import com.emaintec.lib.network.NetworkProgress
 import com.emaintec.lib.util.setOneClickListener
@@ -113,9 +114,8 @@ class CkFault: Fragment_Base()  {
                 if(binding.editTextSearch.text.toString().isNotBlank()) {
                     "and (PM_TAG_NO like '%${binding.editTextSearch.text.toString()}%' " +
                             "or PM_EQP_NO like '%${binding.editTextSearch.text.toString()}%' " +
-                            "or PM_EQP_NM like '%${binding.editTextSearch.text.toString()}%')"
+                            "or ${ChoSearchQuery.makeQuery("PM_EQP_NM", binding.editTextSearch.text.toString())})"
                 }else{""}
-
             }
             AND PM_STRANGE = 'Y'
             ORDER BY PM_PLN_DT,PM_EQP_NO

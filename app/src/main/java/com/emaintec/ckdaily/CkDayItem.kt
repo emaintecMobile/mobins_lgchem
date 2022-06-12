@@ -448,6 +448,13 @@ class CkDayItem : Fragment_Base() {
 
     override fun onScanMsg(strQrCode: String) {
         super.onScanMsg(strQrCode)
-        updateList(strQrCode)
+        if(PM_EQP_NO.equals(strQrCode))
+        {
+            adapterView.selection=0
+            showInputDtl()
+        }else {
+            updateList(strQrCode)
+        }
+
     }
 }

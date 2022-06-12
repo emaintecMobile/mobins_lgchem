@@ -662,10 +662,12 @@ object Functions {
                                     "업데이트",
                                     "",
                                     DialogInterface.OnClickListener { _, _ ->
+                                        NetworkProgress.start(Emaintec.activity)
                                         CoroutineScope(Dispatchers.Default).launch {
                                             if (TYPE.equals("XML")) {
                                                 downFile(action = { success1: Boolean, msg: String ->
                                                     launch(Dispatchers.Main) {
+                                                        NetworkProgress.end()
                                                         if (success1) {
                                                             // 파일 다운로드 종료 후 다운받은 파일을 실행시킨다.
                                                             if (Build.VERSION.SDK_INT < 24) {
